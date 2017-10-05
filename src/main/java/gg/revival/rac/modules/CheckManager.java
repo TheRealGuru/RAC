@@ -93,6 +93,10 @@ public class CheckManager {
         KillAuraB auraB = new KillAuraB(rac, "Aura [B]", Cheat.AURA, ActionType.BAN, 2, 4, 10, true);
         Bukkit.getPluginManager().registerEvents(auraB, rac);
         checks.add(auraB);
+
+        BadPackets badPackets = new BadPackets(rac, "BadPackets", Cheat.BADPACKETS, ActionType.BAN, 1, 2, 30, true);
+        Bukkit.getPluginManager().registerEvents(badPackets, rac);
+        checks.add(badPackets);
     }
 
     /**

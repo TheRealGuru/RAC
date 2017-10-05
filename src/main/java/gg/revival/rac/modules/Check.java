@@ -9,7 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class Check {
 
@@ -52,12 +55,12 @@ public class Check {
 
         int vlCount = vl.size();
 
-        if(vlCount > vlNotify || important) {
+        if(vlCount >= vlNotify || important) {
             rac.getNotifications().createMessage(violation.getInformation() + " VL: " + vlCount);
             rac.getLog().log(violation.getInformation() + " VL: " + vlCount);
         }
 
-        if(vlCount > vlAction) {
+        if(vlCount >= vlAction) {
             new BukkitRunnable() {
                 public void run() {
                     if(action.equals(ActionType.BAN)) {

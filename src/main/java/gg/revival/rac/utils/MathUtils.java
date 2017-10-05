@@ -5,6 +5,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class MathUtils {
 
     public static double offset(Entity entityA, Entity entityB) {
@@ -17,6 +19,15 @@ public class MathUtils {
 
     public static double offset(Vector vecA, Vector vecB) {
         return vecA.subtract(vecB).length();
+    }
+
+    public static long averageLong(List<Long> toAvg) {
+        long result = 0L;
+
+        for(long value : toAvg)
+            result += value;
+
+        return result / toAvg.size();
     }
 
     public static double getFixedXAxis(double x) {

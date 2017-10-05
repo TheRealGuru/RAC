@@ -7,10 +7,12 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import gg.revival.rac.RAC;
+import gg.revival.rac.packets.events.PacketPlayerEvent;
 import gg.revival.rac.packets.events.PacketSwingArmEvent;
 import gg.revival.rac.packets.events.PacketUseEntityEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -52,6 +54,62 @@ public class PacketManager {
                 if(player == null) return;
 
                 Bukkit.getServer().getPluginManager().callEvent(new PacketSwingArmEvent(event, player));
+            }
+        });
+
+        rac.getProtocolManager().addPacketListener(new PacketAdapter(rac, ListenerPriority.HIGHEST, PacketType.Play.Client.FLYING) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                Player player = event.getPlayer();
+
+                if(player == null) return;
+
+                Location location = player.getLocation();
+
+                Bukkit.getServer().getPluginManager().callEvent(
+                        new PacketPlayerEvent(player, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), PacketPlayerType.FLYING));
+            }
+        });
+
+        rac.getProtocolManager().addPacketListener(new PacketAdapter(rac, ListenerPriority.HIGHEST, PacketType.Play.Client.POSITION_LOOK) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                Player player = event.getPlayer();
+
+                if(player == null) return;
+
+                Location location = player.getLocation();
+
+                Bukkit.getServer().getPluginManager().callEvent(
+                        new PacketPlayerEvent(player, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), PacketPlayerType.POSLOOK));
+            }
+        });
+
+        rac.getProtocolManager().addPacketListener(new PacketAdapter(rac, ListenerPriority.HIGHEST, PacketType.Play.Client.LOOK) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                Player player = event.getPlayer();
+
+                if(player == null) return;
+
+                Location location = player.getLocation();
+
+                Bukkit.getServer().getPluginManager().callEvent(
+                        new PacketPlayerEvent(player, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), PacketPlayerType.LOOK));
+            }
+        });
+
+        rac.getProtocolManager().addPacketListener(new PacketAdapter(rac, ListenerPriority.HIGHEST, PacketType.Play.Client.POSITION) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                Player player = event.getPlayer();
+
+                if(player == null) return;
+
+                Location location = player.getLocation();
+
+                Bukkit.getServer().getPluginManager().callEvent(
+                        new PacketPlayerEvent(player, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), PacketPlayerType.POSITION));
             }
         });
     }
