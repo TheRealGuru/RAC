@@ -9,12 +9,11 @@ public class ACPlayer {
 
     @Getter UUID uuid;
     @Getter String username;
-    @Getter @Setter long recentVelocity, recentAttack;
+    @Getter @Setter long recentAttack;
 
     public ACPlayer(UUID uuid, String username) {
         this.uuid = uuid;
         this.username = username;
-        this.recentVelocity = System.currentTimeMillis();
         this.recentAttack = System.currentTimeMillis();
     }
 

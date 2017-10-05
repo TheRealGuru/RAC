@@ -12,7 +12,7 @@ public class LocationUtils {
      * @return
      */
     public static boolean isNearBlocks(Location location) {
-        for(Block block : BlockUtils.getSurroundingBlocks(location.getBlock())) {
+        for(Block block : BlockUtils.getSurroundingBlocks(location.getBlock(), true)) {
             if(block.getType() == null || block.getType().equals(Material.AIR)) continue;
             return true;
         }

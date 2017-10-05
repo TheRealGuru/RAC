@@ -54,6 +54,10 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(step, rac);
         checks.add(step);
 
+        Spider spider = new Spider(rac, "Spider", Cheat.SPIDER, ActionType.BAN, 3, 6, 15, true);
+        Bukkit.getPluginManager().registerEvents(spider, rac);
+        checks.add(spider);
+
         BedLeave bedLeave = new BedLeave(rac, "BedLeave", Cheat.BEDLEAVE, ActionType.BAN, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(bedLeave, rac);
         checks.add(bedLeave);

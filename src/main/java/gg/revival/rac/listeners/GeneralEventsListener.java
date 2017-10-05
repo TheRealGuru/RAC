@@ -8,11 +8,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class GeneralEventsListener implements Listener {
@@ -45,9 +44,12 @@ public class GeneralEventsListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
+    public void onAttack(EntityDamageByEntityEvent event) {
+        if(!(event.getEntity() instanceof Player)) return;
+
+        Player player = (Player)event.getEntity();
         ACPlayer acPlayer = rac.getPlayerManager().getPlayerByUUID(player.getUniqueId());
-        rac.getPlayerManager().getPlayers().remove(acPlayer);
+
+        acPlayer.setRecentAttack(System.currentTimeMillis());
     }
 }

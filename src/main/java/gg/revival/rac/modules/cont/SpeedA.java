@@ -11,7 +11,6 @@ import gg.revival.rac.utils.MathUtils;
 import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,7 +57,7 @@ public class SpeedA extends Check implements Listener {
         ACPlayer acPlayer = getRac().getPlayerManager().getPlayerByUUID(player.getUniqueId());
 
         // Player has taken velocity recently
-        if((System.currentTimeMillis() - acPlayer.getRecentVelocity()) < 1000L) return;
+        if((System.currentTimeMillis() - acPlayer.getRecentAttack()) < 1000L) return;
 
         int flags = 0, fastFlags = 0;
         long time = System.currentTimeMillis();

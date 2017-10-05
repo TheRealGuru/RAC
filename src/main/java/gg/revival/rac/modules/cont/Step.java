@@ -49,8 +49,8 @@ public class Step extends Check implements Listener {
 
         ACPlayer acPlayer = getRac().getPlayerManager().getPlayerByUUID(player.getUniqueId());
 
-        // Player has taken velocity recently
-        if((System.currentTimeMillis() - acPlayer.getRecentVelocity()) <= 200L) return;
+        // Player has been attacked recently
+        if((System.currentTimeMillis() - acPlayer.getRecentAttack()) <= 200L) return;
 
         // Player is not on the ground
         if(!PlayerUtils.isOnGround(player)) return;

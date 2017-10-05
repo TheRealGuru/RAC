@@ -15,11 +15,15 @@ public class BlockUtils {
      * @param block
      * @return
      */
-    public static List<Block> getSurroundingBlocks(Block block) {
+    public static List<Block> getSurroundingBlocks(Block block, boolean cardinal) {
         List<Block> blocks = Lists.newArrayList();
 
-        for(BlockFace faces : BlockFace.values())
+        for(BlockFace faces : BlockFace.values()) {
+            if(!cardinal)
+                if(!faces.equals(BlockFace.NORTH) && !faces.equals(BlockFace.EAST) && !faces.equals(BlockFace.WEST) && !faces.equals(BlockFace.SOUTH)) continue;
+
             blocks.add(block.getRelative(faces));
+        }
 
         return blocks;
     }
@@ -51,7 +55,7 @@ public class BlockUtils {
      * @return
      */
     public static boolean nearbySlabBlocks(Location location) {
-        for (Block blocks : getSurroundingBlocks(location.getBlock()))
+        for (Block blocks : getSurroundingBlocks(location.getBlock(), true))
 
             if(blocks.getType().equals(Material.STEP) ||
                     blocks.getType().equals(Material.DOUBLE_STEP) ||
