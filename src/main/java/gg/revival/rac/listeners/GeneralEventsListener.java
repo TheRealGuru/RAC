@@ -6,7 +6,10 @@ import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
 import me.gong.mcleaks.MCLeaksAPI;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -75,10 +78,7 @@ public class GeneralEventsListener implements Listener {
 
         if(PlayerUtils.isStandingOnBlock(player, Material.SLIME_BLOCK)) {
             ACPlayer acPlayer = rac.getPlayerManager().getPlayerByUUID(player.getUniqueId());
-
             acPlayer.setRecentBounce(System.currentTimeMillis());
-
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Bounce!");
         }
     }
 }
