@@ -5,6 +5,7 @@ import gg.revival.rac.RAC;
 import gg.revival.rac.modules.Cheat;
 import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
+import gg.revival.rac.players.ACPlayer;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.LocationUtils;
 import gg.revival.rac.utils.Permissions;
@@ -64,6 +65,8 @@ public class Flight extends Check implements Listener {
         // Player is in a block that would modify their physics
         if(PlayerUtils.isInBlock(player, Material.WATER) ||
                 PlayerUtils.isInBlock(player, Material.STATIONARY_WATER) ||
+                PlayerUtils.isInBlock(player, Material.LAVA) ||
+                PlayerUtils.isInBlock(player, Material.STATIONARY_LAVA) ||
                 PlayerUtils.isInBlock(player, Material.WEB)) return;
 
         // Player is nearby blocks
@@ -73,6 +76,11 @@ public class Flight extends Check implements Listener {
 
             return;
         }
+
+        ACPlayer acPlayer = getRac().getPlayerManager().getPlayerByUUID(player.getUniqueId());
+
+        // Player has recently bounced on a slime block
+        if((System.currentTimeMillis() - acPlayer.getRecentBounce()) <= 2000L) return;
 
         if(to.getY() < from.getY()) {
             if(flyingTicks.containsKey(player.getUniqueId()))

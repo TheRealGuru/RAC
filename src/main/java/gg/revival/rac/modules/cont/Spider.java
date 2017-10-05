@@ -7,15 +7,12 @@ import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
 import gg.revival.rac.players.ACPlayer;
 import gg.revival.rac.punishments.ActionType;
-import gg.revival.rac.utils.BlockUtils;
 import gg.revival.rac.utils.MathUtils;
 import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,6 +68,9 @@ public class Spider extends Check implements Listener {
         // Player has been recently attacked
         if((System.currentTimeMillis() - acPlayer.getRecentAttack()) < 1000L) return;
 
+        // Player has recently bounced on a slime block
+        if((System.currentTimeMillis() - acPlayer.getRecentBounce()) <= 2000L) return;
+
         long time = System.currentTimeMillis();
         double distance = 0.0;
 
@@ -82,20 +82,11 @@ public class Spider extends Check implements Listener {
         long difference = System.currentTimeMillis() - time;
         double limit = 2.0;
         double offsetY = MathUtils.offset(MathUtils.getVerticalVector(from.toVector()), MathUtils.getVerticalVector(to.toVector()));
-        boolean isNearClimbable = false;
-
-        for(Block block : BlockUtils.getSurroundingBlocks(player.getLocation().getBlock(), false)) {
-            if(block == null || block.getType() == null || block.getType().equals(Material.AIR)) continue;
-            if(!block.getType().equals(Material.LADDER) && !block.getType().equals(Material.VINE)) continue;
-
-            isNearClimbable = true;
-            break;
-        }
 
         if(offsetY > 0.0)
             distance += offsetY;
 
-        if(isNearClimbable || PlayerUtils.isOnGround(player))
+        if(PlayerUtils.isOnClimbable(player) || PlayerUtils.isOnGround(player))
             distance = 0.0;
 
         if(player.hasPotionEffect(PotionEffectType.JUMP)) {
@@ -108,9 +99,13 @@ public class Spider extends Check implements Listener {
             }
         }
 
-        if(!isNearClimbable && distance > limit) {
+        if(!PlayerUtils.isOnClimbable(player) && distance > limit) {
             if(difference > 500L) {
                 addViolation(player.getUniqueId(), new Violation(player.getName() + " is trying to ascend up a wall (" + Math.round(distance) + " blocks)"), false);
+
+                event.setCancelled(true);
+                player.teleport(from);
+
                 time = System.currentTimeMillis();
             }
         }

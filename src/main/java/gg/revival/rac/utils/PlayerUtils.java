@@ -52,6 +52,17 @@ public class PlayerUtils {
         return !location.getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.AIR);
     }
 
+    public static boolean isOnClimbable(Player player) {
+        for(Block block : BlockUtils.getSurroundingBlocks(player.getLocation().getBlock(), false)) {
+            if(block == null || block.getType() == null || block.getType().equals(Material.AIR)) continue;
+            if(!block.getType().equals(Material.LADDER) && !block.getType().equals(Material.VINE)) continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Returns true if the given block can be stood inside of
      * @param block

@@ -2,15 +2,18 @@ package gg.revival.rac.listeners;
 
 import gg.revival.rac.RAC;
 import gg.revival.rac.players.ACPlayer;
+import gg.revival.rac.utils.Permissions;
+import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
 import me.gong.mcleaks.MCLeaksAPI;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.UUID;
 
@@ -51,5 +54,31 @@ public class GeneralEventsListener implements Listener {
         ACPlayer acPlayer = rac.getPlayerManager().getPlayerByUUID(player.getUniqueId());
 
         acPlayer.setRecentAttack(System.currentTimeMillis());
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        Location from = event.getFrom(), to = event.getTo();
+
+        // Player only moved camera
+        if(from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to.getBlockZ()) return;
+
+        // Player has bypass
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
+        // Player is flying or not in survival
+        if(player.isFlying() || !player.getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        // Player is in vehicle
+        if(player.getVehicle() != null) return;
+
+        if(PlayerUtils.isStandingOnBlock(player, Material.SLIME_BLOCK)) {
+            ACPlayer acPlayer = rac.getPlayerManager().getPlayerByUUID(player.getUniqueId());
+
+            acPlayer.setRecentBounce(System.currentTimeMillis());
+
+            Bukkit.broadcastMessage(ChatColor.GREEN + "Bounce!");
+        }
     }
 }
