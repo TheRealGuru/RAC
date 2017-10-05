@@ -24,6 +24,27 @@ public class BlockUtils {
         return blocks;
     }
 
+    public static List<Block> getNearbyBlocks(Location location, int distance) {
+        List<Block> result = Lists.newArrayList();
+        int x1 = location.getBlockX() - distance, x2 = location.getBlockX() + distance;
+        int y1 = location.getBlockY() - distance, y2 = location.getBlockY() + distance;
+        int z1 = location.getBlockZ() - distance, z2 = location.getBlockZ() + distance;
+
+        for(int x = x1; x < x2; x++) {
+            for(int y = y1; y < y2; y++) {
+                for(int z = z1; z < z2; z++) {
+                    Location nearbyBlockLocation = new Location(location.getWorld(), x, y, z);
+
+                    if(nearbyBlockLocation.getBlock() == null || nearbyBlockLocation.getBlock().getType().equals(Material.AIR)) continue;
+
+                    result.add(nearbyBlockLocation.getBlock());
+                }
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Returns true if the given location is nearby any slab blocks
      * @param location

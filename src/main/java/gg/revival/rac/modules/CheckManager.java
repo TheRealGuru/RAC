@@ -17,6 +17,8 @@ public class CheckManager {
     @Getter private RAC rac;
     @Getter public Set<Check> checks;
 
+    // TODO: No Knockback, Ascension, Glide
+
     public CheckManager(RAC rac) {
         this.rac = rac;
         this.checks = Sets.newConcurrentHashSet();
@@ -51,6 +53,10 @@ public class CheckManager {
         Step step = new Step(rac, "Step", Cheat.STEP, ActionType.KICK, 5, 15, 15, true);
         Bukkit.getPluginManager().registerEvents(step, rac);
         checks.add(step);
+
+        BedLeave bedLeave = new BedLeave(rac, "BedLeave", Cheat.BEDLEAVE, ActionType.BAN, 2, 4, 30, true);
+        Bukkit.getPluginManager().registerEvents(bedLeave, rac);
+        checks.add(bedLeave);
 
         FastBlocks fastBlocks = new FastBlocks(rac, "FastBlocks", Cheat.FASTBLOCK, ActionType.BAN, 3, 6, 15, true);
         Bukkit.getPluginManager().registerEvents(fastBlocks, rac);
