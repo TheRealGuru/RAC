@@ -14,9 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -57,6 +59,19 @@ public class GeneralEventsListener implements Listener {
         ACPlayer acPlayer = rac.getPlayerManager().getPlayerByUUID(player.getUniqueId());
 
         acPlayer.setRecentAttack(System.currentTimeMillis());
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if(!(event.getWhoClicked() instanceof Player)) return;
+
+        Inventory otherInventory = event.getInventory(), clickedInventory = event.getClickedInventory();
+
+        if(otherInventory != null && otherInventory.getName() != null && (otherInventory.getName().startsWith(ChatColor.BOLD + "Player: ") || otherInventory.getName().startsWith(ChatColor.BOLD + "Check: ")))
+            event.setCancelled(true);
+
+        if(clickedInventory != null && clickedInventory.getName() != null && (clickedInventory.getName().startsWith(ChatColor.BOLD + "Player: ") || clickedInventory.getName().startsWith(ChatColor.BOLD + "Check: ")))
+            event.setCancelled(true);
     }
 
     @EventHandler

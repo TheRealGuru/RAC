@@ -9,11 +9,13 @@ import gg.revival.rac.modules.Violation;
 import gg.revival.rac.packets.events.PacketPlayerEvent;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.MathUtils;
+import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -30,10 +32,27 @@ public class BadPackets extends Check implements Listener {
     }
 
     @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        if(timerTicks.containsKey(player.getUniqueId()))
+            timerTicks.remove(player.getUniqueId());
+
+        if(lastTimer.containsKey(player.getUniqueId()))
+            lastTimer.remove(player.getUniqueId());
+
+        if(sentPackets.containsKey(player.getUniqueId()))
+            sentPackets.remove(player.getUniqueId());
+    }
+
+    @EventHandler
     public void onPacketPlayer(PacketPlayerEvent event) {
         if(!isEnabled()) return;
 
         Player player = event.getPlayer();
+
+        // Player has bypass
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
 
         int flags = 0;
 

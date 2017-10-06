@@ -7,9 +7,9 @@ import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
 import gg.revival.rac.players.ACPlayer;
 import gg.revival.rac.punishments.ActionType;
+import gg.revival.rac.utils.LocationUtils;
 import gg.revival.rac.utils.MathUtils;
 import gg.revival.rac.utils.Permissions;
-import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -25,11 +25,11 @@ import java.util.AbstractMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Spider extends Check implements Listener {
+public class Ascension extends Check implements Listener {
 
-    @Getter private Map<UUID, Map.Entry<Long, Double>> spiderTicks = Maps.newConcurrentMap();
+    @Getter private Map<UUID, Map.Entry<Long, Double>> ascensionTicks = Maps.newConcurrentMap();
 
-    public Spider(RAC rac, String name, Cheat cheat, ActionType action, int vlNotify, int vlAction, int vlExpire, boolean enabled) {
+    public Ascension(RAC rac, String name, Cheat cheat, ActionType action, int vlNotify, int vlAction, int vlExpire, boolean enabled) {
         super(rac, name, cheat, action, vlNotify, vlAction, vlExpire, enabled);
     }
 
@@ -37,8 +37,8 @@ public class Spider extends Check implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if(spiderTicks.containsKey(player.getUniqueId()))
-            spiderTicks.remove(player.getUniqueId());
+        if(ascensionTicks.containsKey(player.getUniqueId()))
+            ascensionTicks.remove(player.getUniqueId());
     }
 
     @EventHandler
@@ -73,20 +73,21 @@ public class Spider extends Check implements Listener {
 
         long time = System.currentTimeMillis();
         double distance = 0.0;
+        double limit = 0.5;
+        double offsetY = MathUtils.offset(MathUtils.getVerticalVector(from.toVector()), MathUtils.getVerticalVector(to.toVector()));
 
-        if(spiderTicks.containsKey(player.getUniqueId())) {
-            time = spiderTicks.get(player.getUniqueId()).getKey();
-            distance = spiderTicks.get(player.getUniqueId()).getValue();
+        if(ascensionTicks.containsKey(player.getUniqueId())) {
+            time = ascensionTicks.get(player.getUniqueId()).getKey();
+            distance = ascensionTicks.get(player.getUniqueId()).getValue();
         }
 
         long difference = System.currentTimeMillis() - time;
-        double limit = 2.5;
-        double offsetY = MathUtils.offset(MathUtils.getVerticalVector(from.toVector()), MathUtils.getVerticalVector(to.toVector()));
 
         if(offsetY > 0.0)
             distance += offsetY;
 
-        if(PlayerUtils.isOnClimbable(player) || PlayerUtils.isOnGround(player))
+        if(LocationUtils.isNearBlocks(player.getLocation()) ||
+                LocationUtils.isNearBlocks(player.getLocation().clone().subtract(0, 1, 0)))
             distance = 0.0;
 
         if(player.hasPotionEffect(PotionEffectType.JUMP)) {
@@ -99,9 +100,9 @@ public class Spider extends Check implements Listener {
             }
         }
 
-        if(!PlayerUtils.isOnClimbable(player) && distance > limit) {
+        if(distance > limit) {
             if(difference > 500L) {
-                addViolation(player.getUniqueId(), new Violation(player.getName() + " is trying to ascend up a wall (" + Math.round(distance) + " blocks)"), false);
+                addViolation(player.getUniqueId(), new Violation(player.getName() + " is ascending up " + Math.round(distance) + " blocks"), false);
 
                 event.setCancelled(true);
                 player.teleport(from);
@@ -113,6 +114,6 @@ public class Spider extends Check implements Listener {
         else
             time = System.currentTimeMillis();
 
-        spiderTicks.put(player.getUniqueId(), new AbstractMap.SimpleEntry<>(time, distance));
+        ascensionTicks.put(player.getUniqueId(), new AbstractMap.SimpleEntry<>(time, distance));
     }
 }

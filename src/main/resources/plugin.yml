@@ -4,3 +4,6 @@ version: 1.0.0-ALPHA
 author: johnsama
 description: Revival Network Anticheat
 depend: [ProtocolLib]
+commands:
+  rac:
+    description: RAC Command

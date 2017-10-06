@@ -6,6 +6,13 @@ import gg.revival.rac.modules.cont.*;
 import gg.revival.rac.punishments.ActionType;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +24,7 @@ public class CheckManager {
     @Getter private RAC rac;
     @Getter public Set<Check> checks;
 
-    // TODO: No Knockback, Ascension, Glide
+    // TODO: No Knockback
 
     public CheckManager(RAC rac) {
         this.rac = rac;
@@ -45,6 +52,14 @@ public class CheckManager {
         Flight flight = new Flight(rac, "Flight", Cheat.FLIGHT, ActionType.BAN, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(flight, rac);
         checks.add(flight);
+
+        Ascension ascension = new Ascension(rac, "Ascension", Cheat.ASCENSION, ActionType.BAN, 2, 4, 30, true);
+        Bukkit.getPluginManager().registerEvents(ascension, rac);
+        checks.add(ascension);
+
+        Glide glide = new Glide(rac, "Glide", Cheat.GLIDE, ActionType.BAN, 2, 4, 30, true);
+        Bukkit.getPluginManager().registerEvents(glide, rac);
+        checks.add(glide);
 
         Jesus jesus = new Jesus(rac, "Jesus", Cheat.JESUS, ActionType.BAN, 2, 4, 10, true);
         Bukkit.getPluginManager().registerEvents(jesus, rac);
@@ -86,11 +101,11 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(speedA, rac);
         checks.add(speedA);
 
-        KillAuraA auraA = new KillAuraA(rac, "Aura [A]", Cheat.AURA, rac.getCfg().getAuraAActionType(), rac.getCfg().getAuraANotifyVl(), rac.getCfg().getAuraAActionVl(), rac.getCfg().getAuraAExpireDelay(), rac.getCfg().isAuraAEnabled());
+        KillAuraA auraA = new KillAuraA(rac, "Aura [A]", Cheat.AURA_A, rac.getCfg().getAuraAActionType(), rac.getCfg().getAuraANotifyVl(), rac.getCfg().getAuraAActionVl(), rac.getCfg().getAuraAExpireDelay(), rac.getCfg().isAuraAEnabled());
         Bukkit.getPluginManager().registerEvents(auraA, rac);
         checks.add(auraA);
 
-        KillAuraB auraB = new KillAuraB(rac, "Aura [B]", Cheat.AURA, ActionType.BAN, 2, 4, 10, true);
+        KillAuraB auraB = new KillAuraB(rac, "Aura [B]", Cheat.AURA_B, ActionType.BAN, 2, 4, 10, true);
         Bukkit.getPluginManager().registerEvents(auraB, rac);
         checks.add(auraB);
 
@@ -131,6 +146,74 @@ public class CheckManager {
         }
 
         return ImmutableMap.copyOf(result);
+    }
+
+    public Check getCheckByCheat(Cheat cheat) {
+        for(Check check : checks)
+            if(check.getCheat().equals(cheat)) return check;
+
+        return null;
+    }
+
+    public void showPlayerViolations(Player displayTo, Player lookup) {
+        Inventory gui = Bukkit.createInventory(null, 54, ChatColor.BOLD + "Player: " + ChatColor.DARK_GREEN + lookup.getName());
+        ImmutableMap<Check, List<Violation>> violations = getViolations(lookup.getUniqueId());
+
+        for(Check check : violations.keySet()) {
+            ItemStack icon = new ItemStack(Material.BARRIER);
+            ItemMeta meta = icon.getItemMeta();
+
+            icon.setAmount(violations.get(check).size());
+
+            meta.setDisplayName(ChatColor.GREEN + check.getName());
+
+            List<String> lore = Lists.newArrayList();
+
+            for(Violation violation : violations.get(check))
+                lore.add(ChatColor.RED + violation.getInformation());
+
+            meta.setLore(lore);
+            icon.setItemMeta(meta);
+
+            gui.addItem(icon);
+        }
+
+        displayTo.openInventory(gui);
+    }
+
+    public void showCheckViolations(Player displayTo, Check check) {
+        Inventory gui = Bukkit.createInventory(null, 54, ChatColor.BOLD + "Check: " + ChatColor.RED + check.getName());
+
+        int cursor = 0;
+
+        for(UUID uuid : check.getViolations().keySet()) {
+            if(cursor >= 54) continue;
+            if(Bukkit.getPlayer(uuid) == null || !Bukkit.getPlayer(uuid).isOnline()) continue;
+
+            Player player = Bukkit.getPlayer(uuid);
+
+            ItemStack icon = new ItemStack(Material.SKULL, 1, (short)3);
+            SkullMeta meta = (SkullMeta)icon.getItemMeta();
+
+            icon.setAmount(check.getViolations().get(uuid).size());
+
+            meta.setDisplayName(ChatColor.GREEN + player.getName());
+            meta.setOwner(player.getName());
+
+            List<String> lore = Lists.newArrayList();
+
+            for(Violation vl : check.getViolations().get(uuid))
+                lore.add(ChatColor.RED + vl.getInformation());
+
+            meta.setLore(lore);
+            icon.setItemMeta(meta);
+
+            gui.addItem(icon);
+
+            cursor++;
+        }
+
+        displayTo.openInventory(gui);
     }
 
 }

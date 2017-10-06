@@ -2,6 +2,8 @@ package gg.revival.rac;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import gg.revival.rac.commands.CommandManager;
+import gg.revival.rac.commands.RACCommandExecutor;
 import gg.revival.rac.listeners.GeneralEventsListener;
 import gg.revival.rac.modules.CheckManager;
 import gg.revival.rac.packets.PacketManager;
@@ -23,6 +25,7 @@ public class RAC extends JavaPlugin {
     @Getter public CheckManager checkManager;
     @Getter public PlayerManager playerManager;
     @Getter public PacketManager packetManager;
+    @Getter public CommandManager commandManager;
     @Getter public Notification notifications;
     @Getter public Config cfg;
     @Getter public Log log;
@@ -44,9 +47,11 @@ public class RAC extends JavaPlugin {
         this.checkManager = new CheckManager(this);
         this.playerManager = new PlayerManager(this);
         this.packetManager = new PacketManager(this);
+        this.commandManager = new CommandManager(this);
         this.notifications = new Notification(this);
 
         loadListeners();
+        loadCommands();
         loadTasks();
     }
 
@@ -62,6 +67,7 @@ public class RAC extends JavaPlugin {
         this.checkManager = null;
         this.playerManager = null;
         this.packetManager = null;
+        this.commandManager = null;
         this.notifications = null;
 
         Bukkit.getScheduler().cancelAllTasks();
@@ -73,6 +79,10 @@ public class RAC extends JavaPlugin {
 
     private void loadListeners() {
         Bukkit.getPluginManager().registerEvents(new GeneralEventsListener(this), this);
+    }
+
+    private void loadCommands() {
+        getCommand("rac").setExecutor(new RACCommandExecutor(this));
     }
 
 }
