@@ -18,6 +18,13 @@ public class Config {
     @Getter public int autoclickerExpireDelay;
     @Getter public int autoclickerCpsThreshold;
 
+    @Getter public boolean flightEnabled;
+    @Getter public ActionType flightActionType;
+    @Getter public int flightNotifyVl;
+    @Getter public int flightActionVl;
+    @Getter public int flightExpireDelay;
+    @Getter public long flightMaxMS;
+
     @Getter public boolean phaseEnabled;
     @Getter public ActionType phaseActionType;
     @Getter public int phaseNotifyVl;
@@ -32,6 +39,13 @@ public class Config {
     @Getter public int vclipActionVl;
     @Getter public int vclipExpireDelay;
 
+    @Getter public boolean stepEnabled;
+    @Getter public ActionType stepActionType;
+    @Getter public int stepNotifyVl;
+    @Getter public int stepActionVl;
+    @Getter public int stepExpireDelay;
+    @Getter public double stepMaxBlocks;
+
     @Getter public boolean auraAEnabled;
     @Getter public ActionType auraAActionType;
     @Getter public int auraANotifyVl;
@@ -39,12 +53,25 @@ public class Config {
     @Getter public int auraAExpireDelay;
     @Getter public int auraARequiredFlags;
 
+    @Getter public boolean speedAEnabled;
+    @Getter public ActionType speedAActionType;
+    @Getter public int speedANotifyVl;
+    @Getter public int speedAActionVl;
+    @Getter public int speedAExpireDelay;
+
     @Getter public boolean auraBEnabled;
     @Getter public ActionType auraBActionType;
     @Getter public int auraBNotifyVl;
     @Getter public int auraBActionVl;
     @Getter public int auraBExpireDelay;
     @Getter public int auraBInterval;
+
+    @Getter public boolean spiderEnabled;
+    @Getter public ActionType spiderActionType;
+    @Getter public int spiderNotifyVl;
+    @Getter public int spiderActionVl;
+    @Getter public int spiderExpireDelay;
+    @Getter public double spiderMaxBlocks;
 
     public Config(RAC rac) {
         this.rac = rac;
@@ -69,6 +96,13 @@ public class Config {
         autoclickerExpireDelay = rac.getConfig().getInt("autoclicker.expire-delay");
         autoclickerCpsThreshold = rac.getConfig().getInt("autoclicker.cps-threshold");
 
+        flightEnabled = rac.getConfig().getBoolean("flight.enabled");
+        flightActionType = ActionType.valueOf(rac.getConfig().getString("flight.action"));
+        flightNotifyVl = rac.getConfig().getInt("flight.notify-vl");
+        flightActionVl = rac.getConfig().getInt("flight.action-vl");
+        flightExpireDelay = rac.getConfig().getInt("flight.expire-delay");
+        flightMaxMS = (long)rac.getConfig().getInt("flight.max-ms");
+
         phaseEnabled = rac.getConfig().getBoolean("phase.enabled");
         phaseActionType = ActionType.valueOf(rac.getConfig().getString("phase.action"));
         phaseNotifyVl = rac.getConfig().getInt("phase.notify-vl");
@@ -83,12 +117,32 @@ public class Config {
         vclipActionVl = rac.getConfig().getInt("vclip.action-vl");
         vclipExpireDelay = rac.getConfig().getInt("vclip.expire-delay");
 
+        stepEnabled = rac.getConfig().getBoolean("step.enabled");
+        stepActionType = ActionType.valueOf(rac.getConfig().getString("step.action"));
+        stepNotifyVl = rac.getConfig().getInt("step.notify-vl");
+        stepActionVl = rac.getConfig().getInt("step.action-vl");
+        stepExpireDelay = rac.getConfig().getInt("step.expire-delay");
+        stepMaxBlocks = rac.getConfig().getDouble("step.max-blocks");
+
+        speedAEnabled = rac.getConfig().getBoolean("speed.a.enabled");
+        speedAActionType = ActionType.valueOf(rac.getConfig().getString("speed.a.action"));
+        speedANotifyVl = rac.getConfig().getInt("speed.a.notify-vl");
+        speedAActionVl = rac.getConfig().getInt("speed.a.action-vl");
+        speedAExpireDelay = rac.getConfig().getInt("speed.a.expire-delay");
+
         auraAEnabled = rac.getConfig().getBoolean("killaura.a.enabled");
         auraAActionType = ActionType.valueOf(rac.getConfig().getString("killaura.a.action"));
         auraANotifyVl = rac.getConfig().getInt("killaura.a.notify-vl");
         auraAActionVl = rac.getConfig().getInt("killaura.a.action-vl");
         auraAExpireDelay = rac.getConfig().getInt("killaura.a.expire-delay");
         auraARequiredFlags = rac.getConfig().getInt("killaura.a.required-flags");
+
+        spiderEnabled = rac.getConfig().getBoolean("spider.enabled");
+        spiderActionType = ActionType.valueOf(rac.getConfig().getString("spider.action"));
+        spiderNotifyVl = rac.getConfig().getInt("spider.notify-vl");
+        spiderActionVl = rac.getConfig().getInt("spider.action-vl");
+        spiderExpireDelay = rac.getConfig().getInt("spider.expire-delay");
+        spiderMaxBlocks = rac.getConfig().getDouble("spider.max-blocks");
 
         rac.getLog().log("Loaded files");
     }

@@ -96,7 +96,7 @@ public class Flight extends Check implements Listener {
 
         final long timeDifference = System.currentTimeMillis() - time;
 
-        if(timeDifference > 400L) {
+        if(timeDifference > getRac().getCfg().getFlightMaxMS()) {
             flyingTicks.remove(player.getUniqueId());
 
             addViolation(player.getUniqueId(), new Violation(player.getName() + " has been hovering above the ground for " + timeDifference + "ms"), false);

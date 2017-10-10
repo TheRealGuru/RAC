@@ -49,7 +49,8 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(reach, rac);
         checks.add(reach);
 
-        Flight flight = new Flight(rac, "Flight", Cheat.FLIGHT, ActionType.BAN, 2, 4, 30, true);
+        Flight flight = new Flight(rac, "Flight", Cheat.FLIGHT, rac.getCfg().getFlightActionType(), rac.getCfg().getFlightNotifyVl(),
+                rac.getCfg().getFlightActionVl(), rac.getCfg().getFlightExpireDelay(), rac.getCfg().isFlightEnabled());
         Bukkit.getPluginManager().registerEvents(flight, rac);
         checks.add(flight);
 
@@ -65,11 +66,13 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(jesus, rac);
         checks.add(jesus);
 
-        Step step = new Step(rac, "Step", Cheat.STEP, ActionType.KICK, 5, 10, 15, true);
+        Step step = new Step(rac, "Step", Cheat.STEP, rac.getCfg().getStepActionType(), rac.getCfg().getStepNotifyVl(),
+                rac.getCfg().getStepActionVl(), rac.getCfg().getStepExpireDelay(), rac.getCfg().isStepEnabled());
         Bukkit.getPluginManager().registerEvents(step, rac);
         checks.add(step);
 
-        Spider spider = new Spider(rac, "Spider", Cheat.SPIDER, ActionType.BAN, 2, 4, 10, true);
+        Spider spider = new Spider(rac, "Spider", Cheat.SPIDER, rac.getCfg().getSpiderActionType(), rac.getCfg().getSpiderNotifyVl(),
+                rac.getCfg().getSpiderActionVl(), rac.getCfg().getSpiderExpireDelay(), rac.getCfg().isSpiderEnabled());
         Bukkit.getPluginManager().registerEvents(spider, rac);
         checks.add(spider);
 
@@ -97,11 +100,13 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(regen, rac);
         checks.add(regen);
 
-        SpeedA speedA = new SpeedA(rac, "Speed", Cheat.SPEED, ActionType.BAN, 2, 4, 10, true);
+        SpeedA speedA = new SpeedA(rac, "Speed [A]", Cheat.SPEED_A, ActionType.BAN, rac.getCfg().getSpeedANotifyVl(), rac.getCfg().getSpeedAActionVl(),
+                rac.getCfg().getSpeedAExpireDelay(), rac.getCfg().isSpeedAEnabled());
         Bukkit.getPluginManager().registerEvents(speedA, rac);
         checks.add(speedA);
 
-        KillAuraA auraA = new KillAuraA(rac, "Aura [A]", Cheat.AURA_A, rac.getCfg().getAuraAActionType(), rac.getCfg().getAuraANotifyVl(), rac.getCfg().getAuraAActionVl(), rac.getCfg().getAuraAExpireDelay(), rac.getCfg().isAuraAEnabled());
+        KillAuraA auraA = new KillAuraA(rac, "Aura [A]", Cheat.AURA_A, rac.getCfg().getAuraAActionType(), rac.getCfg().getAuraANotifyVl(), rac.getCfg().getAuraAActionVl(),
+                rac.getCfg().getAuraAExpireDelay(), rac.getCfg().isAuraAEnabled());
         Bukkit.getPluginManager().registerEvents(auraA, rac);
         checks.add(auraA);
 
@@ -192,7 +197,7 @@ public class CheckManager {
 
             Player player = Bukkit.getPlayer(uuid);
 
-            ItemStack icon = new ItemStack(Material.SKULL, 1, (short)3);
+            ItemStack icon = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
             SkullMeta meta = (SkullMeta)icon.getItemMeta();
 
             icon.setAmount(check.getViolations().get(uuid).size());

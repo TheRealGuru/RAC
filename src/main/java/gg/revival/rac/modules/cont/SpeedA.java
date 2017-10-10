@@ -6,7 +6,6 @@ import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
 import gg.revival.rac.players.ACPlayer;
 import gg.revival.rac.punishments.ActionType;
-import gg.revival.rac.utils.BlockUtils;
 import gg.revival.rac.utils.MathUtils;
 import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
@@ -70,14 +69,6 @@ public class SpeedA extends Check implements Listener {
         if(fastTicks.containsKey(player.getUniqueId())) {
             double offset = MathUtils.offset(MathUtils.getHorizontalVector(from.toVector()), MathUtils.getHorizontalVector(to.toVector()));
             double offsetLimit;
-
-            if(PlayerUtils.isOnGround(player) && player.getVehicle() == null)
-                offsetLimit = 0.33;
-            else
-                offsetLimit = 0.4;
-
-            if(BlockUtils.nearbySlabBlocks(player.getLocation()))
-                offsetLimit += 0.05;
 
             Location eyeLocation = player.getEyeLocation().clone();
 

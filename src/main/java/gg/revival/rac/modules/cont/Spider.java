@@ -80,7 +80,7 @@ public class Spider extends Check implements Listener {
         }
 
         long difference = System.currentTimeMillis() - time;
-        double limit = 2.5;
+        double limit = getRac().getCfg().getSpiderMaxBlocks();
         double offsetY = MathUtils.offset(MathUtils.getVerticalVector(from.toVector()), MathUtils.getVerticalVector(to.toVector()));
 
         if(offsetY > 0.0)

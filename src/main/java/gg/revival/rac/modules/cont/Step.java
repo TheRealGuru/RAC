@@ -58,7 +58,7 @@ public class Step extends Check implements Listener {
         double yDifference = to.getY() - from.getY();
 
         // Player moved up higher than possible in vanilla
-        if(yDifference > 0.9) {
+        if(yDifference > getRac().getCfg().getStepMaxBlocks()) {
             event.setCancelled(true);
             player.teleport(from);
             addViolation(player.getUniqueId(), new Violation(player.getName() + " stepped up " + Math.round(yDifference) + " blocks"), false);

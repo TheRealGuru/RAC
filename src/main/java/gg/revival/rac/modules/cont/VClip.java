@@ -5,11 +5,12 @@ import gg.revival.rac.modules.Cheat;
 import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
 import gg.revival.rac.punishments.ActionType;
+import gg.revival.rac.utils.BlockUtils;
 import gg.revival.rac.utils.Permissions;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,18 +46,23 @@ public class VClip extends Check implements Listener {
         // Player moved up a slab
         if(yDifference < 0.5) return;
 
+        // Player is running up stairs
+        for(Block nearbyBlocks : BlockUtils.getNearbyBlocks(to, 2)) {
+            if(nearbyBlocks.getType() == null || !nearbyBlocks.getType().name().toLowerCase().contains("_stairs")) continue;
+            return;
+        }
+
         int clippedBlocks = 0;
 
         for(int y = (int)Math.round(yDifference), i = 0; i < y; i++) {
             Location location = (yDifference < -0.5) ? to.clone().add(0.0, i, 0.0) : from.clone().add(0.0, i, 0.0);
 
-            if(location.getBlock() != null &&
-                    !location.getBlock().getType().equals(Material.AIR) &&
-                    location.getBlock().getType().isSolid() &&
-                    location.getBlock().getType().isBlock()) {
+            Block block = location.getBlock();
 
-                clippedBlocks++;
-            }
+            if(block == null || block.getType().equals(Material.AIR) ||
+                    !block.getType().isSolid() && !block.getType().isBlock()) continue;
+
+            clippedBlocks++;
         }
 
         if(clippedBlocks > 0) {
