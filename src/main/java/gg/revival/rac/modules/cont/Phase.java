@@ -82,11 +82,11 @@ public class Phase extends Check implements Listener {
         if(to.getBlock() == null || to.getBlock().getType().equals(Material.AIR)) return;
 
         // Here we're getting the difference of the players location to the center of the block they're moving to
-        double centerX = to.getBlockX() + 0.5, centerZ = to.getBlockZ() + 0.5;
-        double xDifference = Math.abs(player.getLocation().getX() - centerX), zDifference = Math.abs(player.getLocation().getZ() - centerZ);
+        double centerX = to.getBlockX() + 0.5, centerY = to.getBlockY() + 0.5, centerZ = to.getBlockZ() + 0.5;
+        double xDifference = Math.abs(player.getLocation().getX() - centerX), yDifference = Math.abs(player.getLocation().getY() - centerY), zDifference = Math.abs(player.getLocation().getZ() - centerZ);
 
         // Check to see if the player is in the middle of a block
-        if(xDifference <= getRac().getCfg().getSkipPhaseThreshold() && zDifference <= getRac().getCfg().getSkipPhaseThreshold()) {
+        if(xDifference <= getRac().getCfg().getSkipPhaseThreshold() && yDifference <= getRac().getCfg().getSkipPhaseThreshold() && zDifference <= getRac().getCfg().getSkipPhaseThreshold()) {
             // Check if the player is in the middle of a phase block
             if(phaseBlocks.contains(from.getBlock().getType())) {
                 boolean skipCheck = false;

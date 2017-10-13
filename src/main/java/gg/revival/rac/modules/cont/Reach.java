@@ -7,7 +7,6 @@ import gg.revival.rac.modules.Violation;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -38,10 +37,7 @@ public class Reach extends Check implements Listener {
 
         if(!playerDamager.getGameMode().equals(GameMode.SURVIVAL)) return;
 
-        double maxReach = 3.5;
-
-        if(playerDamager.isSprinting())
-            maxReach = 4.0;
+        double maxReach = 4.5;
 
         maxReach += playerDamager.getVelocity().length() * 4.5;
 
@@ -61,11 +57,15 @@ public class Reach extends Check implements Listener {
             maxReach += 0.8;
         else if(ping > 350 && ping < 400)
             maxReach += 1.0;
+        else if(ping >= 400 && ping < 450)
+            maxReach += 1.2;
+        else if(ping >= 450)
+            return;
 
         double yDifference = Math.abs(playerDamager.getLocation().getY() - damaged.getLocation().getY());
         maxReach += (yDifference / 4.0);
 
         if(distance > maxReach)
-            addViolation(playerDamager.getUniqueId(), new Violation(playerDamager.getName() + " attacked an entity at a distance of " + Math.round(distance) + ", Ping: " + ping + "ms"), false);
+            addViolation(playerDamager.getUniqueId(), new Violation(playerDamager.getName() + " attacked an entity at a distance of " + distance + ", Ping: " + ping + "ms"), false);
     }
 }

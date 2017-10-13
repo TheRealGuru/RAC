@@ -70,7 +70,7 @@ public class Flight extends Check implements Listener {
                 PlayerUtils.isInBlock(player, Material.WEB)) return;
 
         // Player is nearby blocks
-        if(LocationUtils.isNearBlocks(player.getLocation())) {
+        if(LocationUtils.isNearBlocks(player.getLocation()) || LocationUtils.isNearBlocks(player.getLocation().clone().subtract(0, 1, 0))) {
             if(flyingTicks.containsKey(player.getUniqueId()))
                 flyingTicks.remove(player.getUniqueId());
 

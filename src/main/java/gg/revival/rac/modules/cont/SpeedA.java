@@ -53,6 +53,9 @@ public class SpeedA extends Check implements Listener {
         // Player isn't in survival
         if(!player.getGameMode().equals(GameMode.SURVIVAL)) return;
 
+        // Player is in a vehicle
+        if(player.getVehicle() != null) return;
+
         ACPlayer acPlayer = getRac().getPlayerManager().getPlayerByUUID(player.getUniqueId());
 
         // Player has taken velocity recently

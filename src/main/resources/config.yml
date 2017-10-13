@@ -1,16 +1,12 @@
-# notification-queue-interval : Rate (in ticks) that the notification queue should poll new messages
 core-settings:
   notification-queue-interval: 5
 
-# ping-api : Should a request be sent to the MCLeaks client API to check if the users account is compromised? (will disallow the player if it is compromised)
+patches:
+  boats: true
+
 mcleaks-api:
   ping-api: true
 
-# Enabled : is the cheat detection enabled
-# Action : what action should be performed if the players violation count reaches action-vl
-# Notify VL : what violation count should the player need to reach in order to notify staff
-# Action VL : what violation count should the player need to reach for action to be taken
-# Expire Delay : how long (in seconds) should we wait before subtracting violations from the player
 autoclicker:
   enabled: true
   action: BAN
@@ -61,13 +57,6 @@ killaura:
     action-vl: 4
     expire-delay: 10
     required-flags: 10
-  b:
-    enabled: true
-    action: BAN
-    notify-vl: 2
-    action-vl: 4
-    expire-delay: 10
-    ms-interval: 10
 spider:
   enabled: true
   action: BAN

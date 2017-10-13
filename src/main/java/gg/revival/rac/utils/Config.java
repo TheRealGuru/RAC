@@ -10,6 +10,7 @@ public class Config {
 
     @Getter public boolean pingLeaksApi;
     @Getter public int notificationQueueInterval;
+    @Getter public boolean patchBoats;
 
     @Getter public boolean autoclickerEnabled;
     @Getter public ActionType autoclickerActionType;
@@ -86,6 +87,8 @@ public class Config {
 
     public void loadFiles() {
         notificationQueueInterval = rac.getConfig().getInt("core-settings.notification-queue-interval");
+
+        patchBoats = rac.getConfig().getBoolean("patches.boats");
 
         pingLeaksApi = rac.getConfig().getBoolean("mcleaks-api.ping-api");
 

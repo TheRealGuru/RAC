@@ -7,6 +7,7 @@ import gg.revival.rac.commands.RACCommandExecutor;
 import gg.revival.rac.listeners.GeneralEventsListener;
 import gg.revival.rac.modules.CheckManager;
 import gg.revival.rac.packets.PacketManager;
+import gg.revival.rac.patches.PatchManager;
 import gg.revival.rac.players.PlayerManager;
 import gg.revival.rac.tasks.NotificationQueueTask;
 import gg.revival.rac.utils.Config;
@@ -26,6 +27,7 @@ public class RAC extends JavaPlugin {
     @Getter public PlayerManager playerManager;
     @Getter public PacketManager packetManager;
     @Getter public CommandManager commandManager;
+    @Getter public PatchManager patchManager;
     @Getter public Notification notifications;
     @Getter public Config cfg;
     @Getter public Log log;
@@ -48,6 +50,7 @@ public class RAC extends JavaPlugin {
         this.playerManager = new PlayerManager(this);
         this.packetManager = new PacketManager(this);
         this.commandManager = new CommandManager(this);
+        this.patchManager = new PatchManager(this);
         this.notifications = new Notification(this);
 
         loadListeners();
@@ -68,6 +71,7 @@ public class RAC extends JavaPlugin {
         this.playerManager = null;
         this.packetManager = null;
         this.commandManager = null;
+        this.patchManager = null;
         this.notifications = null;
 
         Bukkit.getScheduler().cancelAllTasks();

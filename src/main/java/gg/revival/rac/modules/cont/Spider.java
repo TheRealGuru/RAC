@@ -99,7 +99,7 @@ public class Spider extends Check implements Listener {
             }
         }
 
-        if(!PlayerUtils.isOnClimbable(player) && distance > limit) {
+        if(distance > limit) {
             if(difference > 500L) {
                 addViolation(player.getUniqueId(), new Violation(player.getName() + " is trying to ascend up a wall (" + Math.round(distance) + " blocks)"), false);
 
