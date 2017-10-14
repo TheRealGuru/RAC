@@ -8,7 +8,6 @@ import gg.revival.rac.modules.Violation;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.BlockUtils;
 import gg.revival.rac.utils.Permissions;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,7 +19,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class VClip extends Check implements Listener {
 
-    private final ImmutableList<Material> exemptBlocks = ImmutableList.of(Material.WALL_SIGN, Material.SIGN, Material.SIGN_POST, Material.WOOD_PLATE, Material.STONE_PLATE, Material.IRON_PLATE, Material.GOLD_PLATE);
+    private final ImmutableList<Material> exemptBlocks = ImmutableList.of(Material.WALL_SIGN, Material.SIGN, Material.SIGN_POST, Material.WOOD_PLATE, Material.STONE_PLATE, Material.IRON_PLATE, Material.GOLD_PLATE,
+            Material.CAKE_BLOCK, Material.FENCE, Material.STEP, Material.AIR, Material.SLIME_BLOCK);
+
+    private final ImmutableList<String> exemptBlockVariants = ImmutableList.of("_FENCE", "FENCE_", "_STAIRS", "_STEP", "PISTON_");
 
     public VClip(RAC rac, String name, Cheat cheat, ActionType action, int vlNotify, int vlAction, int vlExpire, boolean enabled) {
         super(rac, name, cheat, action, vlNotify, vlAction, vlExpire, enabled);
@@ -51,12 +53,11 @@ public class VClip extends Check implements Listener {
         if(yDifference < 0.5) return;
 
         // Player is running up stairs/slabs
-        for(Block nearbyBlocks : BlockUtils.getNearbyBlocks(to, 2)) {
-            if(nearbyBlocks.getType() == null ||
-                    !nearbyBlocks.getType().name().contains("_STAIRS") ||
-                    !nearbyBlocks.getType().name().contains("_STEP")) continue;
+        for(Block nearbyBlocks : BlockUtils.getNearbyBlocks(to, 1)) {
+            if(exemptBlocks.contains(nearbyBlocks.getType())) return;
 
-            return;
+            for(String variantNames : exemptBlockVariants)
+                if(nearbyBlocks.getType().name().contains(variantNames)) return;
         }
 
         int clippedBlocks = 0;
@@ -66,11 +67,20 @@ public class VClip extends Check implements Listener {
 
             Block block = location.getBlock();
 
-            if(block == null || block.getType().equals(Material.AIR) || block.getType().name().contains("_STEP") || block.getType().name().contains("_STAIRS") ||
-                    block.getType().name().contains("STEP") || block.getType().name().contains("_FENCE") || !block.getType().isSolid() ||
-                    !block.getType().isBlock() || exemptBlocks.contains(block.getType())) continue;
+            if(!block.getType().isSolid()) continue;
 
-            Bukkit.broadcastMessage("Vclip debug: " + block.getType().name());
+            if(exemptBlocks.contains(block.getType())) continue;
+
+            boolean isExempt = false;
+
+            for(String variantNames : exemptBlockVariants) {
+                if(block.getType().name().contains(variantNames)) {
+                    isExempt = true;
+                    break;
+                }
+            }
+
+            if(isExempt) continue;
 
             clippedBlocks++;
         }

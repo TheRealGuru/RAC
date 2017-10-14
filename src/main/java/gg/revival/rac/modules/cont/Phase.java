@@ -33,8 +33,8 @@ import java.util.UUID;
 public class Phase extends Check implements Listener {
 
     @Getter private final ImmutableList<Material> phaseBlocks = ImmutableList.of(Material.FENCE, Material.TRAP_DOOR, Material.FENCE_GATE, Material.IRON_BARDING, Material.THIN_GLASS,
-            Material.NETHER_FENCE, Material.COBBLE_WALL, Material.ANVIL, Material.CHEST, Material.TRAPPED_CHEST, Material.HOPPER, Material.STAINED_GLASS_PANE, Material.HOPPER,
-            Material.IRON_TRAPDOOR, Material.ACACIA_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.SPRUCE_FENCE_GATE,
+            Material.NETHER_FENCE, Material.COBBLE_WALL, Material.ANVIL, Material.CHEST, Material.TRAPPED_CHEST, Material.HOPPER, Material.STAINED_GLASS_PANE, Material.IRON_TRAPDOOR,
+            Material.ACACIA_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.SPRUCE_FENCE_GATE,
             Material.ACACIA_FENCE, Material.BIRCH_FENCE, Material.DARK_OAK_FENCE, Material.JUNGLE_FENCE, Material.SPRUCE_FENCE);
 
     @Getter private Set<UUID> recentlyChecked = Sets.newConcurrentHashSet();

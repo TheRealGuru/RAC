@@ -61,7 +61,11 @@ public class Glide extends Check implements Listener {
         if(player.getVehicle() != null) return;
 
         // Player is in a cobweb
-        if(PlayerUtils.isInBlock(player, Material.WEB) || to.clone().add(0, 1, 0).getBlock().getType().equals(Material.WEB)) return;
+        if(PlayerUtils.isInBlock(player, Material.WEB)) return;
+
+        // Player is sliding down from a cobweb
+        for(int i = 0; i < 3; i++)
+            if(player.getLocation().clone().add(0, i, 0).getBlock().getType().equals(Material.WEB)) return;
 
         // Player is near blocks
         if(LocationUtils.isNearBlocks(player.getLocation())) {
