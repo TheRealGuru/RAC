@@ -113,6 +113,11 @@ public class CheckManager {
         BadPackets badPackets = new BadPackets(rac, "BadPackets", Cheat.BADPACKETS, ActionType.BAN, 1, 2, 30, true);
         Bukkit.getPluginManager().registerEvents(badPackets, rac);
         checks.add(badPackets);
+
+        BlockGlitch blockGlitch = new BlockGlitch(rac, "BlockGlitch", Cheat.BLOCKGLITCH, rac.getCfg().getBlockGlitchActionType(), rac.getCfg().getBlockGlitchNotifyVl(),
+                rac.getCfg().getBlockGlitchActionVl(), rac.getCfg().getBlockGlitchExpireDelay(), rac.getCfg().isBlockGlitchEnabled());
+        Bukkit.getPluginManager().registerEvents(blockGlitch, rac);
+        checks.add(blockGlitch);
     }
 
     /**

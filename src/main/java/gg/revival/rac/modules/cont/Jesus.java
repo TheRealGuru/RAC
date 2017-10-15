@@ -9,10 +9,11 @@ import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.Permissions;
 import gg.revival.rac.utils.PlayerUtils;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,6 +57,13 @@ public class Jesus extends Check implements Listener {
 
         // Player is probably in a boat
         if(player.getVehicle() != null) return;
+
+        // Player is standing on a boat
+        for(Entity nearbyEntities : player.getNearbyEntities(2, 2, 2)) {
+            if(!(nearbyEntities instanceof Boat)) continue;
+
+            return;
+        }
 
         long time = System.currentTimeMillis();
 

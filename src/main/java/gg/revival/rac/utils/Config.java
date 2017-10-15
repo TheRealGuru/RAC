@@ -74,6 +74,12 @@ public class Config {
     @Getter public int spiderExpireDelay;
     @Getter public double spiderMaxBlocks;
 
+    @Getter public boolean blockGlitchEnabled;
+    @Getter public ActionType blockGlitchActionType;
+    @Getter public int blockGlitchNotifyVl;
+    @Getter public int blockGlitchActionVl;
+    @Getter public int blockGlitchExpireDelay;
+
     public Config(RAC rac) {
         this.rac = rac;
     }
@@ -146,6 +152,12 @@ public class Config {
         spiderActionVl = rac.getConfig().getInt("spider.action-vl");
         spiderExpireDelay = rac.getConfig().getInt("spider.expire-delay");
         spiderMaxBlocks = rac.getConfig().getDouble("spider.max-blocks");
+
+        blockGlitchEnabled = rac.getConfig().getBoolean("blockglitch.enabled");
+        blockGlitchActionType = ActionType.valueOf(rac.getConfig().getString("blockglitch.action"));
+        blockGlitchNotifyVl = rac.getConfig().getInt("blockglitch.notify-vl");
+        blockGlitchActionVl = rac.getConfig().getInt("blockglitch.action-vl");
+        blockGlitchExpireDelay = rac.getConfig().getInt("blockglitch.expire-delay");
 
         rac.getLog().log("Loaded files");
     }
