@@ -2,6 +2,7 @@ package gg.revival.rac.commands;
 
 import gg.revival.rac.RAC;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ public class RACCommandExecutor implements CommandExecutor {
         if(!command.getName().equalsIgnoreCase("rac")) return false;
 
         if(args.length == 0) {
-            // TODO: Send RAC info
+            sender.sendMessage(rac.getNotifications().getPrefix() + ChatColor.YELLOW + "Server protected by " + ChatColor.GOLD + "Revival Anticheat");
             return false;
         }
 

@@ -110,7 +110,8 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(auraA, rac);
         checks.add(auraA);
 
-        BadPackets badPackets = new BadPackets(rac, "BadPackets", Cheat.BADPACKETS, ActionType.BAN, 1, 2, 30, true);
+        BadPackets badPackets = new BadPackets(rac, "BadPackets", Cheat.BADPACKETS, rac.getCfg().getBadPacketsActionType(), rac.getCfg().getBadPacketsNotifyVl(), rac.getCfg().getBadPacketsActionVl(),
+                rac.getCfg().getBadPacketsExpireDelay(), rac.getCfg().isBadPacketsEnabled());
         Bukkit.getPluginManager().registerEvents(badPackets, rac);
         checks.add(badPackets);
 
@@ -161,6 +162,11 @@ public class CheckManager {
         return null;
     }
 
+    /**
+     * Opens a GUI to the given player showing all violations currently active for the supplied "lookup" player
+     * @param displayTo
+     * @param lookup
+     */
     public void showPlayerViolations(Player displayTo, Player lookup) {
         Inventory gui = Bukkit.createInventory(null, 54, ChatColor.BOLD + "Player: " + ChatColor.DARK_GREEN + lookup.getName());
         ImmutableMap<Check, List<Violation>> violations = getViolations(lookup.getUniqueId());
@@ -187,6 +193,11 @@ public class CheckManager {
         displayTo.openInventory(gui);
     }
 
+    /**
+     * Opens up a GUI to the given player showing all violations currently active for the provided cheat type
+     * @param displayTo
+     * @param check
+     */
     public void showCheckViolations(Player displayTo, Check check) {
         Inventory gui = Bukkit.createInventory(null, 54, ChatColor.BOLD + "Check: " + ChatColor.RED + check.getName());
 

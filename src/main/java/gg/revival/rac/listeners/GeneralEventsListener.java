@@ -39,7 +39,8 @@ public class GeneralEventsListener implements Listener {
         final MCLeaksAPI.Result result = rac.getMcleaksApi().checkAccount(uuid);
 
         if(result.isMCLeaks())
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.RED + "Your account has been compromised" + "\n" + ChatColor.WHITE + "You will no longer be allowed to log in with this account");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.RED + "Your account has been compromised" + "\n" +
+                    ChatColor.WHITE + "You will no longer be allowed to log in with this account");
         else
             rac.getLog().log("'" + uuid.toString() + "' account is not listed on MCLeaks website");
     }

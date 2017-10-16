@@ -80,6 +80,13 @@ public class Config {
     @Getter public int blockGlitchActionVl;
     @Getter public int blockGlitchExpireDelay;
 
+    @Getter public boolean badPacketsEnabled;
+    @Getter public ActionType badPacketsActionType;
+    @Getter public int badPacketsNotifyVl;
+    @Getter public int badPacketsActionVl;
+    @Getter public int badPacketsExpireDelay;
+    @Getter public int badPacketsFlags;
+
     public Config(RAC rac) {
         this.rac = rac;
     }
@@ -101,66 +108,73 @@ public class Config {
 
         pingLeaksApi = rac.getConfig().getBoolean("mcleaks-api.ping-api");
 
-        autoclickerEnabled = rac.getConfig().getBoolean("autoclicker.enabled");
+        autoclickerEnabled = rac.getConfig().getBoolean("checks.autoclicker.enabled");
         autoclickerActionType = ActionType.valueOf(rac.getConfig().getString("autoclicker.action"));
-        autoclickerNotifyVl = rac.getConfig().getInt("autoclicker.notify-vl");
-        autoclickerActionVl = rac.getConfig().getInt("autoclicker.action-vl");
-        autoclickerExpireDelay = rac.getConfig().getInt("autoclicker.expire-delay");
-        autoclickerCpsThreshold = rac.getConfig().getInt("autoclicker.cps-threshold");
+        autoclickerNotifyVl = rac.getConfig().getInt("checks.autoclicker.notify-vl");
+        autoclickerActionVl = rac.getConfig().getInt("checks.autoclicker.action-vl");
+        autoclickerExpireDelay = rac.getConfig().getInt("checks.autoclicker.expire-delay");
+        autoclickerCpsThreshold = rac.getConfig().getInt("checks.autoclicker.cps-threshold");
 
-        flightEnabled = rac.getConfig().getBoolean("flight.enabled");
-        flightActionType = ActionType.valueOf(rac.getConfig().getString("flight.action"));
-        flightNotifyVl = rac.getConfig().getInt("flight.notify-vl");
-        flightActionVl = rac.getConfig().getInt("flight.action-vl");
-        flightExpireDelay = rac.getConfig().getInt("flight.expire-delay");
-        flightMaxMS = (long)rac.getConfig().getInt("flight.max-ms");
+        flightEnabled = rac.getConfig().getBoolean("checks.flight.enabled");
+        flightActionType = ActionType.valueOf(rac.getConfig().getString("checks.flight.action"));
+        flightNotifyVl = rac.getConfig().getInt("checks.flight.notify-vl");
+        flightActionVl = rac.getConfig().getInt("checks.flight.action-vl");
+        flightExpireDelay = rac.getConfig().getInt("checks.flight.expire-delay");
+        flightMaxMS = (long)rac.getConfig().getInt("checks.flight.max-ms");
 
-        phaseEnabled = rac.getConfig().getBoolean("phase.enabled");
-        phaseActionType = ActionType.valueOf(rac.getConfig().getString("phase.action"));
-        phaseNotifyVl = rac.getConfig().getInt("phase.notify-vl");
-        phaseActionVl = rac.getConfig().getInt("phase.action-vl");
-        phaseExpireDelay = rac.getConfig().getInt("phase.expire-delay");
-        skipPhaseThreshold = rac.getConfig().getDouble("phase.skip-phase-threshold");
-        blockPhaseDistance = rac.getConfig().getDouble("phase.block-phase-distance");
+        phaseEnabled = rac.getConfig().getBoolean("checks.phase.enabled");
+        phaseActionType = ActionType.valueOf(rac.getConfig().getString("checks.phase.action"));
+        phaseNotifyVl = rac.getConfig().getInt("checks.phase.notify-vl");
+        phaseActionVl = rac.getConfig().getInt("checks.phase.action-vl");
+        phaseExpireDelay = rac.getConfig().getInt("checks.phase.expire-delay");
+        skipPhaseThreshold = rac.getConfig().getDouble("checks.phase.skip-phase-threshold");
+        blockPhaseDistance = rac.getConfig().getDouble("checks.phase.block-phase-distance");
 
-        vclipEnabled = rac.getConfig().getBoolean("vclip.enabled");
-        vclipActionType = ActionType.valueOf(rac.getConfig().getString("vclip.action"));
-        vclipNotifyVl = rac.getConfig().getInt("vclip.notify-vl");
-        vclipActionVl = rac.getConfig().getInt("vclip.action-vl");
-        vclipExpireDelay = rac.getConfig().getInt("vclip.expire-delay");
+        vclipEnabled = rac.getConfig().getBoolean("checks.vclip.enabled");
+        vclipActionType = ActionType.valueOf(rac.getConfig().getString("checks.vclip.action"));
+        vclipNotifyVl = rac.getConfig().getInt("checks.vclip.notify-vl");
+        vclipActionVl = rac.getConfig().getInt("checks.vclip.action-vl");
+        vclipExpireDelay = rac.getConfig().getInt("checks.vclip.expire-delay");
 
-        stepEnabled = rac.getConfig().getBoolean("step.enabled");
-        stepActionType = ActionType.valueOf(rac.getConfig().getString("step.action"));
-        stepNotifyVl = rac.getConfig().getInt("step.notify-vl");
-        stepActionVl = rac.getConfig().getInt("step.action-vl");
-        stepExpireDelay = rac.getConfig().getInt("step.expire-delay");
-        stepMaxBlocks = rac.getConfig().getDouble("step.max-blocks");
+        stepEnabled = rac.getConfig().getBoolean("checks.step.enabled");
+        stepActionType = ActionType.valueOf(rac.getConfig().getString("checks.step.action"));
+        stepNotifyVl = rac.getConfig().getInt("checks.step.notify-vl");
+        stepActionVl = rac.getConfig().getInt("checks.step.action-vl");
+        stepExpireDelay = rac.getConfig().getInt("checks.step.expire-delay");
+        stepMaxBlocks = rac.getConfig().getDouble("checks.step.max-blocks");
 
-        speedAEnabled = rac.getConfig().getBoolean("speed.a.enabled");
-        speedAActionType = ActionType.valueOf(rac.getConfig().getString("speed.a.action"));
-        speedANotifyVl = rac.getConfig().getInt("speed.a.notify-vl");
-        speedAActionVl = rac.getConfig().getInt("speed.a.action-vl");
-        speedAExpireDelay = rac.getConfig().getInt("speed.a.expire-delay");
+        speedAEnabled = rac.getConfig().getBoolean("checks.speed.a.enabled");
+        speedAActionType = ActionType.valueOf(rac.getConfig().getString("checks.speed.a.action"));
+        speedANotifyVl = rac.getConfig().getInt("checks.speed.a.notify-vl");
+        speedAActionVl = rac.getConfig().getInt("checks.speed.a.action-vl");
+        speedAExpireDelay = rac.getConfig().getInt("checks.speed.a.expire-delay");
 
-        auraAEnabled = rac.getConfig().getBoolean("killaura.a.enabled");
-        auraAActionType = ActionType.valueOf(rac.getConfig().getString("killaura.a.action"));
-        auraANotifyVl = rac.getConfig().getInt("killaura.a.notify-vl");
-        auraAActionVl = rac.getConfig().getInt("killaura.a.action-vl");
-        auraAExpireDelay = rac.getConfig().getInt("killaura.a.expire-delay");
-        auraARequiredFlags = rac.getConfig().getInt("killaura.a.required-flags");
+        auraAEnabled = rac.getConfig().getBoolean("checks.killaura.a.enabled");
+        auraAActionType = ActionType.valueOf(rac.getConfig().getString("checks.killaura.a.action"));
+        auraANotifyVl = rac.getConfig().getInt("checks.killaura.a.notify-vl");
+        auraAActionVl = rac.getConfig().getInt("checks.killaura.a.action-vl");
+        auraAExpireDelay = rac.getConfig().getInt("checks.killaura.a.expire-delay");
+        auraARequiredFlags = rac.getConfig().getInt("checks.killaura.a.required-flags");
 
-        spiderEnabled = rac.getConfig().getBoolean("spider.enabled");
-        spiderActionType = ActionType.valueOf(rac.getConfig().getString("spider.action"));
-        spiderNotifyVl = rac.getConfig().getInt("spider.notify-vl");
-        spiderActionVl = rac.getConfig().getInt("spider.action-vl");
-        spiderExpireDelay = rac.getConfig().getInt("spider.expire-delay");
-        spiderMaxBlocks = rac.getConfig().getDouble("spider.max-blocks");
+        spiderEnabled = rac.getConfig().getBoolean("checks.spider.enabled");
+        spiderActionType = ActionType.valueOf(rac.getConfig().getString("checks.spider.action"));
+        spiderNotifyVl = rac.getConfig().getInt("checks.spider.notify-vl");
+        spiderActionVl = rac.getConfig().getInt("checks.spider.action-vl");
+        spiderExpireDelay = rac.getConfig().getInt("checks.spider.expire-delay");
+        spiderMaxBlocks = rac.getConfig().getDouble("checks.spider.max-blocks");
 
-        blockGlitchEnabled = rac.getConfig().getBoolean("blockglitch.enabled");
-        blockGlitchActionType = ActionType.valueOf(rac.getConfig().getString("blockglitch.action"));
-        blockGlitchNotifyVl = rac.getConfig().getInt("blockglitch.notify-vl");
-        blockGlitchActionVl = rac.getConfig().getInt("blockglitch.action-vl");
-        blockGlitchExpireDelay = rac.getConfig().getInt("blockglitch.expire-delay");
+        blockGlitchEnabled = rac.getConfig().getBoolean("checks.blockglitch.enabled");
+        blockGlitchActionType = ActionType.valueOf(rac.getConfig().getString("checks.blockglitch.action"));
+        blockGlitchNotifyVl = rac.getConfig().getInt("checks.blockglitch.notify-vl");
+        blockGlitchActionVl = rac.getConfig().getInt("checks.blockglitch.action-vl");
+        blockGlitchExpireDelay = rac.getConfig().getInt("checks.blockglitch.expire-delay");
+
+        badPacketsEnabled = rac.getConfig().getBoolean("checks.badpackets.enabled");
+        badPacketsActionType = ActionType.valueOf(rac.getConfig().getString("checks.badpackets.action"));
+        badPacketsNotifyVl = rac.getConfig().getInt("checks.badpackets.notify-vl");
+        badPacketsActionVl = rac.getConfig().getInt("checks.badpackets.action-vl");
+        badPacketsExpireDelay = rac.getConfig().getInt("checks.badpackets.expire-delay");
+        badPacketsFlags = rac.getConfig().getInt("checks.badpackets.flags");
 
         rac.getLog().log("Loaded files");
     }

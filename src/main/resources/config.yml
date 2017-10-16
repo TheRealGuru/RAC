@@ -1,77 +1,81 @@
 core-settings:
   notification-queue-interval: 5
-
 learning-values:
   reach:
     walk: 0.0
     sprint: 0.0
-
 patches:
   boats: true
-
 mcleaks-api:
   ping-api: true
-
-autoclicker:
-  enabled: true
-  action: BAN
-  notify-vl: 2
-  action-vl: 4
-  expire-delay: 20
-  cps-threshold: 15
-flight:
-  enabled: true
-  action: BAN
-  notify-vl: 2
-  action-vl: 4
-  expire-delay: 30
-  max-ms: 400
-phase:
-  enabled: true
-  action: KICK
-  notify-vl: 2
-  action-vl: 4
-  expire-delay: 10
-  skip-phase-threshold: 0.2
-  block-phase-distance: 1.05
-vclip:
-  enabled: true
-  action: BAN
-  notify-vl: 2
-  action-vl: 3
-  expire-delay: 15
-step:
-  enabled: true
-  action: BAN
-  notify-vl: 6
-  action-vl: 12
-  expire-delay: 30
-  max-blocks: 0.9
-speed:
-  a:
+checks:
+  autoclicker:
     enabled: true
     action: BAN
     notify-vl: 2
     action-vl: 4
+    expire-delay: 20
+    cps-threshold: 15
+  flight:
+    enabled: true
+    action: KICK
+    notify-vl: 2
+    action-vl: 4
+    expire-delay: 30
+    max-ms: 400
+  phase:
+    enabled: true
+    action: KICK
+    notify-vl: 2
+    action-vl: 4
     expire-delay: 10
-killaura:
-  a:
+    skip-phase-threshold: 0.2
+    block-phase-distance: 1.05
+  vclip:
     enabled: true
     action: BAN
     notify-vl: 2
     action-vl: 4
-    expire-delay: 10
-    required-flags: 10
-spider:
-  enabled: true
-  action: BAN
-  notify-vl: 2
-  action-vl: 4
-  expire-delay: 15
-  max-blocks: 2.5
-blockglitch:
-  enabled: true
-  action: KICK
-  notify-vl: 2
-  action-vl: 4
-  expire-delay: 30
+    expire-delay: 30
+  step:
+    enabled: true
+    action: KICK
+    notify-vl: 6
+    action-vl: 12
+    expire-delay: 30
+    max-blocks: 0.9
+  speed:
+    a:
+      enabled: true
+      action: BAN
+      notify-vl: 2
+      action-vl: 4
+      expire-delay: 10
+  killaura:
+    a:
+      enabled: true
+      action: NONE
+      notify-vl: 3
+      action-vl: 6
+      expire-delay: 10
+      required-flags: 10
+  spider:
+    enabled: true
+    action: KICK
+    notify-vl: 2
+    action-vl: 4
+    expire-delay: 15
+    max-blocks: 3.0
+  blockglitch:
+    enabled: true
+    action: NONE
+    notify-vl: 2
+    action-vl: 4
+    expire-delay: 30
+  badpackets:
+    enabled: true
+    action: KICK
+    notify-vl: 1
+    action-vl: 2
+    expire-delay: 15
+    flags: 4
