@@ -17,6 +17,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -66,8 +67,12 @@ public class FastBow extends Check implements Listener {
             limit = 150L;
 
         if(power > 2.5 && time < limit) {
-            event.setCancelled(true);
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is firing a bow too fast, Ping: " + ping + "ms"), false);
+
+            verbose(Arrays.asList(player.getName() + " attempted to fire a bow too fast",
+                    "Power: " + power + ", Limit: " + limit + ", Time: " + time + ", Ping: " + ping + "ms"));
+
+            event.setCancelled(true);
         }
     }
 }

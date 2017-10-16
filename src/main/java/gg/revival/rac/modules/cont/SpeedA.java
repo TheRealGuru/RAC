@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -110,9 +111,14 @@ public class SpeedA extends Check implements Listener {
         }
 
         if(flags >= 2) {
+            addViolation(player.getUniqueId(), new Violation("[A] " + player.getName() + " moved quicker than expected (" + flags + ")"), false);
+
+            verbose(Arrays.asList(player.getName() + " moved quicker than expected",
+                    "Flags: " + flags + ", Fast-flags: " + fastFlags + ", Time: " + (System.currentTimeMillis() - time)));
+
             event.setCancelled(true);
             player.teleport(from);
-            addViolation(player.getUniqueId(), new Violation("[A] " + player.getName() + " moved quicker than expected (" + flags + ")"), false);
+
             flags = 0;
         }
 

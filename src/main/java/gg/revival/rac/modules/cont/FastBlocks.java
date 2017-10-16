@@ -8,7 +8,6 @@ import gg.revival.rac.modules.Violation;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.Permissions;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,6 +57,9 @@ public class FastBlocks extends Check implements Listener {
 
         if(difference <= 95L) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " placed blocks quicker than expected (" + difference + "ms)"), false);
+
+            verbose(player.getName() + " placed blocks at a rate of " + difference + "ms");
+
             event.setCancelled(true);
         }
 

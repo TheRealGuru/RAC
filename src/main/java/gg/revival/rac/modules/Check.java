@@ -37,6 +37,23 @@ public class Check {
     }
 
     /**
+     * Dumps info to log file
+     * @param info
+     */
+    public void verbose(String info) {
+        rac.getLog().log("[DUMP] " + info);
+    }
+
+    /**
+     * Dumps a list containing information to log file
+     * @param infos
+     */
+    public void verbose(List<String> infos) {
+        for(String info : infos)
+            verbose(info);
+    }
+
+    /**
      * Adds a violation to the given UUID for this check
      * @param uuid Player UUID
      * @param violation New Violation w/ Info

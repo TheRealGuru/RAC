@@ -90,6 +90,7 @@ public class Jesus extends Check implements Listener {
 
         if(difference > 500L) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " has been hovering above water for " + difference + "ms"), false);
+
             event.setCancelled(true);
             return;
         }

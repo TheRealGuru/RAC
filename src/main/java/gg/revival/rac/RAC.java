@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import gg.revival.rac.commands.CommandManager;
 import gg.revival.rac.commands.RACCommandExecutor;
+import gg.revival.rac.learning.LearningManager;
 import gg.revival.rac.listeners.GeneralEventsListener;
 import gg.revival.rac.modules.CheckManager;
 import gg.revival.rac.packets.PacketManager;
@@ -28,6 +29,7 @@ public class RAC extends JavaPlugin {
     @Getter public PacketManager packetManager;
     @Getter public CommandManager commandManager;
     @Getter public PatchManager patchManager;
+    @Getter public LearningManager learningManager;
     @Getter public Notification notifications;
     @Getter public Config cfg;
     @Getter public Log log;
@@ -38,6 +40,7 @@ public class RAC extends JavaPlugin {
     public void onEnable() {
         this.rac = this;
         this.log = new Log(this);
+        this.learningManager = new LearningManager(this); // Have to init here or else if throws an NPE for config issues
         this.cfg = new Config(this);
         this.protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -72,6 +75,7 @@ public class RAC extends JavaPlugin {
         this.packetManager = null;
         this.commandManager = null;
         this.patchManager = null;
+        this.learningManager = null;
         this.notifications = null;
 
         Bukkit.getScheduler().cancelAllTasks();

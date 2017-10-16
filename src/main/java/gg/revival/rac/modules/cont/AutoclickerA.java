@@ -11,13 +11,12 @@ import gg.revival.rac.packets.events.PacketUseEntityEvent;
 import gg.revival.rac.punishments.ActionType;
 import gg.revival.rac.utils.Permissions;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -66,8 +65,19 @@ public class AutoclickerA extends Check implements Listener {
 
         cps = clicks.get(attacker.getUniqueId()).size();
 
-        if(cps >= getRac().getCfg().autoclickerCpsThreshold)
+        if(cps >= getRac().getCfg().autoclickerCpsThreshold) {
             addViolation(attacker.getUniqueId(), new Violation("[A] " + attacker.getName() + " is clicking at " + cps + "CPS"), false);
+
+            long average = 0;
+
+            for(long clicks : clicks.get(attacker.getUniqueId()))
+                average += clicks;
+
+            average = average / clicks.size();
+
+            verbose(Arrays.asList(attacker.getName() + " is clicking at " + cps + "CPS",
+                    "Average time between clicks: " + average + "ms"));
+        }
     }
 
 }

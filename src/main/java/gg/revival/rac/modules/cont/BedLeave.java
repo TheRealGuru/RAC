@@ -30,9 +30,8 @@ public class BedLeave extends Check implements Listener {
 
         if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
 
-        for(Block block : BlockUtils.getNearbyBlocks(location, 8)) {
+        for(Block block : BlockUtils.getNearbyBlocks(location, 8))
             if(block.getType().equals(Material.BED) || block.getType().equals(Material.BED_BLOCK)) return;
-        }
 
         addViolation(player.getUniqueId(), new Violation(player.getName() + " teleported after leaving a bed"), true);
     }

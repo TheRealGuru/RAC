@@ -59,9 +59,10 @@ public class Step extends Check implements Listener {
 
         // Player moved up higher than possible in vanilla
         if(yDifference > getRac().getCfg().getStepMaxBlocks()) {
+            addViolation(player.getUniqueId(), new Violation(player.getName() + " stepped up " + Math.round(yDifference) + " blocks"), false);
+
             event.setCancelled(true);
             player.teleport(from);
-            addViolation(player.getUniqueId(), new Violation(player.getName() + " stepped up " + Math.round(yDifference) + " blocks"), false);
         }
     }
 }

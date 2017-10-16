@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -103,6 +104,9 @@ public class Ascension extends Check implements Listener {
         if(distance > limit) {
             if(difference > 500L) {
                 addViolation(player.getUniqueId(), new Violation(player.getName() + " is ascending up " + Math.round(distance) + " blocks"), false);
+
+                verbose(Arrays.asList(player.getName() + " is ascending up " + Math.round(distance) + " blocks",
+                        "Difference (ms): " + difference + ", Offset-Y: " + offsetY + ", Jump Boost: " + player.hasPotionEffect(PotionEffectType.JUMP)));
 
                 event.setCancelled(true);
                 player.teleport(from);

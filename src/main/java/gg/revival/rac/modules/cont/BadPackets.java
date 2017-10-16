@@ -93,8 +93,9 @@ public class BadPackets extends Check implements Listener {
             }
         }
 
-        if(flags > 4) {
+        if(flags > 4) { // TODO: Make this configurable
             addViolation(player.getUniqueId(), new Violation(player.getName() + " sent bad packets (" + flags + "), Ping: " + PlayerUtils.getPing(player) + "ms"), true);
+
             flags = 0;
         }
 

@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -71,6 +72,10 @@ public class Regen extends Check implements Listener {
 
             if((System.currentTimeMillis() - lastHeal) < 3000L) {
                 addViolation(player.getUniqueId(), new Violation(player.getName() + " healed faster than possible (" + (System.currentTimeMillis() - lastHeal) + "ms)"), true);
+
+                verbose(Arrays.asList(player.getName() + " healed faster than possible",
+                        "Time since last heal: " + (System.currentTimeMillis() - lastHeal) + "ms, Flags: " + flags));
+
                 event.setCancelled(true);
             }
 

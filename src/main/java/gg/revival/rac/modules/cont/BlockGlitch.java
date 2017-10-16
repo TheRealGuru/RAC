@@ -6,6 +6,7 @@ import gg.revival.rac.modules.Cheat;
 import gg.revival.rac.modules.Check;
 import gg.revival.rac.modules.Violation;
 import gg.revival.rac.punishments.ActionType;
+import gg.revival.rac.utils.Permissions;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -51,6 +52,8 @@ public class BlockGlitch extends Check implements Listener {
 
         if(!block.getType().isSolid()) return;
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(recentBreaks.contains(player.getUniqueId())) return;
 
         recentBreaks.add(uuid);
@@ -68,8 +71,13 @@ public class BlockGlitch extends Check implements Listener {
 
         Player player = (Player)event.getDamager();
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(recentBreaks.contains(player.getUniqueId())) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is attempting to glitch through blocks"), false);
+
+            verbose(player.getName() + " attempted to attack a " + event.getEntity().getType().name());
+
             event.setCancelled(true);
         }
     }
@@ -86,10 +94,15 @@ public class BlockGlitch extends Check implements Listener {
 
         if(block == null || block.getType().equals(Material.AIR)) return;
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(!clickables.contains(block.getType())) return;
 
         if(recentBreaks.contains(player.getUniqueId())) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is attempting to glitch through blocks"), false);
+
+            verbose(player.getName() + " attempted to interact with a " + block.getType().name());
+
             event.setCancelled(true);
         }
     }
@@ -100,20 +113,30 @@ public class BlockGlitch extends Check implements Listener {
 
         if(event.isCancelled()) return;
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(recentBreaks.contains(player.getUniqueId())) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is attempting to glitch through blocks"), false);
+
+            verbose(player.getName() + " attempted to interact with a " + event.getRightClicked().getType().name());
+
             event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onPlayerEnterVehicle(PlayerBedEnterEvent event) {
+    public void onPlayerEnterBed(PlayerBedEnterEvent event) {
         Player player = event.getPlayer();
 
         if(event.isCancelled()) return;
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(recentBreaks.contains(player.getUniqueId())) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is attempting to glitch through blocks"), false);
+
+            verbose(player.getName() + " attempted to enter a bed");
+
             event.setCancelled(true);
         }
     }

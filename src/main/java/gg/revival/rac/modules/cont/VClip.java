@@ -1,6 +1,7 @@
 package gg.revival.rac.modules.cont;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
 import gg.revival.rac.RAC;
 import gg.revival.rac.modules.Cheat;
 import gg.revival.rac.modules.Check;
@@ -16,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.Map;
 
 public class VClip extends Check implements Listener {
 
@@ -61,6 +64,7 @@ public class VClip extends Check implements Listener {
         }
 
         int clippedBlocks = 0;
+        Map<Material, Integer> clippedBlockData = Maps.newHashMap();
 
         for(int y = (int)Math.round(yDifference), i = 0; i < y; i++) {
             Location location = (yDifference < -0.5) ? to.clone().add(0.0, i, 0.0) : from.clone().add(0.0, i, 0.0);
@@ -82,13 +86,23 @@ public class VClip extends Check implements Listener {
 
             if(isExempt) continue;
 
+            if(clippedBlockData.containsKey(block.getType()))
+                clippedBlockData.put(block.getType(), clippedBlockData.get(block.getType()) + 1);
+            else
+                clippedBlockData.put(block.getType(), 1);
+
             clippedBlocks++;
         }
 
         if(clippedBlocks > 0) {
+            addViolation(player.getUniqueId(), new Violation(player.getName() + " tried moving vertically through " + clippedBlocks + " blocks"), true);
+
+            verbose(player.getName() + " tried moving vertically though " + clippedBlocks + " blocks");
+            for(Material clippedBlock : clippedBlockData.keySet())
+                verbose("Type: " + clippedBlock.name() + ", Amt: " + clippedBlockData.get(clippedBlock));
+
             event.setCancelled(true);
             player.teleport(from);
-            addViolation(player.getUniqueId(), new Violation(player.getName() + " tried moving vertically through " + clippedBlocks + " blocks"), true);
         }
     }
 }

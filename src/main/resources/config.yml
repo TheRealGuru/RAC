@@ -1,6 +1,11 @@
 core-settings:
   notification-queue-interval: 5
 
+learning-values:
+  reach:
+    walk: 0.0
+    sprint: 0.0
+
 patches:
   boats: true
 
@@ -64,3 +69,9 @@ spider:
   action-vl: 4
   expire-delay: 15
   max-blocks: 2.5
+blockglitch:
+  enabled: true
+  action: KICK
+  notify-vl: 2
+  action-vl: 4
+  expire-delay: 30

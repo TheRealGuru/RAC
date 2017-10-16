@@ -92,6 +92,9 @@ public class Config {
     }
 
     public void loadFiles() {
+        rac.getLearningManager().setLearnedSprintingReach(rac.getConfig().getDouble("learning.reach.sprint"));
+        rac.getLearningManager().setLearnedWalkingReach(rac.getConfig().getDouble("learning.reach.walk"));
+
         notificationQueueInterval = rac.getConfig().getInt("core-settings.notification-queue-interval");
 
         patchBoats = rac.getConfig().getBoolean("patches.boats");

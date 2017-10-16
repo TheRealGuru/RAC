@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -63,31 +64,31 @@ public class KillAuraA extends Check implements Listener {
         double offsetLimit = 600.0;
 
         if(attacker.getVelocity().length() > 0.08)
-            offsetLimit += 150.0;
+            offsetLimit += 200.0;
 
         int ping = PlayerUtils.getPing(attacker);
 
         if(ping >= 100 && ping < 200)
-            offsetLimit += 75.0;
+            offsetLimit += 200.0;
         else if(ping >= 200 && ping < 250)
-            offsetLimit += 125.0;
-        else if(ping >= 250 && ping < 300)
-            offsetLimit += 175.0;
-        else if(ping >= 300 && ping < 350)
             offsetLimit += 225.0;
-        else if(ping >= 350 && ping < 400)
+        else if(ping >= 250 && ping < 300)
+            offsetLimit += 250.0;
+        else if(ping >= 300 && ping < 350)
             offsetLimit += 275.0;
+        else if(ping >= 350 && ping < 400)
+            offsetLimit += 300.0;
         else if(ping >= 400 && ping < 450)
             offsetLimit += 325.0;
         else if(ping > 450)
             return;
 
         if(offset > (offsetLimit * 4.0))
-            flags += 12;
-        else if(offset > (offsetLimit * 3.0))
             flags += 10;
-        else if(offset > (offsetLimit * 2.0))
+        else if(offset > (offsetLimit * 3.0))
             flags += 8;
+        else if(offset > (offsetLimit * 2.0))
+            flags += 6;
         else if(offset > offsetLimit)
             flags += 4;
 
@@ -96,10 +97,14 @@ public class KillAuraA extends Check implements Listener {
             time = System.currentTimeMillis();
         }
 
-        if(flags >= getRac().getCfg().getAuraARequiredFlags())
+        if(flags >= getRac().getCfg().getAuraARequiredFlags()) {
             addViolation(attacker.getUniqueId(),
                     new Violation("[A] " + attacker.getName() + " attempted to attack an entity outside their field of view (" + Math.abs(offset - offsetLimit) + " over the limit)" + ", Ping: " + ping + "ms"),
                     false);
+
+            verbose(Arrays.asList(attacker.getName() + " attempted to attack an entity outside their field of view",
+                    Math.abs(offset - offsetLimit) + "pxs over the limit, Flags: " + flags + ", Ping: " + ping + "ms"));
+        }
 
         auraTicks.put(attacker.getUniqueId(), new AbstractMap.SimpleEntry<>(flags, time));
     }

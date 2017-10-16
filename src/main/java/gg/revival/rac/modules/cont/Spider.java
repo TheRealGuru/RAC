@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -102,6 +103,9 @@ public class Spider extends Check implements Listener {
         if(distance > limit) {
             if(difference > 500L) {
                 addViolation(player.getUniqueId(), new Violation(player.getName() + " is trying to ascend up a wall (" + Math.round(distance) + " blocks)"), false);
+
+                verbose(Arrays.asList(player.getName() + " attempted to ascend " + Math.round(distance) + " blocks up a wall",
+                        "Time: " + difference + ", Has Jump Boost: " + player.hasPotionEffect(PotionEffectType.JUMP) + ", Limit: " + limit));
 
                 event.setCancelled(true);
                 player.teleport(from);

@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -95,6 +96,9 @@ public class Glide extends Check implements Listener {
             glideTicks.remove(player.getUniqueId());
 
             addViolation(player.getUniqueId(), new Violation(player.getName() + " is falling slower than expected Ping: " + PlayerUtils.getPing(player)), false);
+
+            verbose(Arrays.asList(player.getName() + " is falling slower than expected",
+                    "Difference: " + difference + "ms, Offset-Y: " + offsetY + ", Ping: " + PlayerUtils.getPing(player) + "ms"));
 
             event.setCancelled(true);
             player.teleport(from);

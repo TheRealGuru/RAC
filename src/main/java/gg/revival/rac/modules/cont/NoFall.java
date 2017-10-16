@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -113,6 +114,9 @@ public class NoFall extends Check implements Listener {
             fallDistances.put(player.getUniqueId(), 0.0);
 
             addViolation(player.getUniqueId(), new Violation(player.getName() + " didn't take damage after falling"), false);
+
+            verbose(Arrays.asList(player.getName() + " didn't take damage after falling",
+                    "Flags: " + flags));
         }
 
         nofallTicks.put(player.getUniqueId(), new AbstractMap.SimpleEntry<>(time, flags));

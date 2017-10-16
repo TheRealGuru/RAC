@@ -14,6 +14,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.util.Arrays;
+
 public class Reach extends Check implements Listener {
 
     public Reach(RAC rac, String name, Cheat cheat, ActionType action, int vlNotify, int vlAction, int vlExpire, boolean enabled) {
@@ -65,7 +67,11 @@ public class Reach extends Check implements Listener {
         double yDifference = Math.abs(playerDamager.getLocation().getY() - damaged.getLocation().getY());
         maxReach += (yDifference / 4.0);
 
-        if(distance > maxReach)
+        if(distance > maxReach) {
             addViolation(playerDamager.getUniqueId(), new Violation(playerDamager.getName() + " attacked an entity at a distance of " + distance + ", Ping: " + ping + "ms"), false);
+
+            verbose(Arrays.asList(playerDamager.getName() + " attacked an entity at a distance of " + distance,
+                    "Max reach: " + maxReach + ", Ping: " + ping + "ms"));
+        }
     }
 }
