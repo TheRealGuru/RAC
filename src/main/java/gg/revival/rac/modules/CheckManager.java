@@ -54,15 +54,16 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(flight, rac);
         checks.add(flight);
 
-        Ascension ascension = new Ascension(rac, "Ascension", Cheat.ASCENSION, ActionType.BAN, 2, 4, 30, true);
+        Ascension ascension = new Ascension(rac, "Ascension", Cheat.ASCENSION, ActionType.KICK, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(ascension, rac);
         checks.add(ascension);
 
-        Glide glide = new Glide(rac, "Glide", Cheat.GLIDE, ActionType.BAN, 2, 4, 30, true);
+        Glide glide = new Glide(rac, "Glide", Cheat.GLIDE, ActionType.KICK, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(glide, rac);
         checks.add(glide);
 
-        Jesus jesus = new Jesus(rac, "Jesus", Cheat.JESUS, ActionType.BAN, 2, 4, 10, true);
+        Jesus jesus = new Jesus(rac, "Jesus", Cheat.JESUS, rac.getCfg().getJesusActionType(), rac.getCfg().getJesusNotifyVl(), rac.getCfg().getJesusActionVl(),
+                rac.getCfg().getJesusExpireDelay(), rac.getCfg().isJesusEnabled());
         Bukkit.getPluginManager().registerEvents(jesus, rac);
         checks.add(jesus);
 

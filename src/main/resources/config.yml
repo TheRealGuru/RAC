@@ -86,3 +86,9 @@ checks:
     action-vl: 2
     expire-delay: 15
     flags: 4
+  jesus:
+    enabled: true
+    action: KICK
+    notify-vl: 3
+    action-vl: 6
+    expire-delay: 30

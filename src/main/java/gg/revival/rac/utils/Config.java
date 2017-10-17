@@ -87,12 +87,23 @@ public class Config {
     @Getter public int badPacketsExpireDelay;
     @Getter public int badPacketsFlags;
 
+    @Getter public boolean jesusEnabled;
+    @Getter public ActionType jesusActionType;
+    @Getter public int jesusNotifyVl;
+    @Getter public int jesusActionVl;
+    @Getter public int jesusExpireDelay;
+
     public Config(RAC rac) {
         this.rac = rac;
     }
 
     public void createFiles() {
         rac.getConfig().options().copyDefaults(true);
+        rac.getConfig().options().header(
+                "------------------------------\n"
+                        + "Revival Anticheat Configuration\n"
+                        + "------------------------------\n");
+
         rac.saveConfig();
 
         rac.getLog().log("Created files");
@@ -109,7 +120,7 @@ public class Config {
         pingLeaksApi = rac.getConfig().getBoolean("mcleaks-api.ping-api");
 
         autoclickerEnabled = rac.getConfig().getBoolean("checks.autoclicker.enabled");
-        autoclickerActionType = ActionType.valueOf(rac.getConfig().getString("autoclicker.action"));
+        autoclickerActionType = ActionType.valueOf(rac.getConfig().getString("checks.autoclicker.action"));
         autoclickerNotifyVl = rac.getConfig().getInt("checks.autoclicker.notify-vl");
         autoclickerActionVl = rac.getConfig().getInt("checks.autoclicker.action-vl");
         autoclickerExpireDelay = rac.getConfig().getInt("checks.autoclicker.expire-delay");
@@ -175,6 +186,12 @@ public class Config {
         badPacketsActionVl = rac.getConfig().getInt("checks.badpackets.action-vl");
         badPacketsExpireDelay = rac.getConfig().getInt("checks.badpackets.expire-delay");
         badPacketsFlags = rac.getConfig().getInt("checks.badpackets.flags");
+
+        jesusEnabled = rac.getConfig().getBoolean("checks.jesus.enabled");
+        jesusActionType = ActionType.valueOf(rac.getConfig().getString("checks.jesus.action"));
+        jesusNotifyVl = rac.getConfig().getInt("checks.jesus.notify-vl");
+        jesusActionVl = rac.getConfig().getInt("checks.jesus.action-vl");
+        jesusExpireDelay = rac.getConfig().getInt("checks.jesus.expire-delay");
 
         rac.getLog().log("Loaded files");
     }
