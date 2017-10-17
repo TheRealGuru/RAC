@@ -30,7 +30,7 @@ public class RACCommandExecutor implements CommandExecutor {
                 return false;
             }
 
-            if(commands.getAliases().contains(args[0].toLowerCase())) {
+            if(command.getAliases() != null && !command.getAliases().isEmpty() && commands.getAliases().contains(args[0].toLowerCase())) {
                 commands.onCommand(sender, args);
                 return false;
             }
