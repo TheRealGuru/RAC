@@ -59,6 +59,13 @@ checks:
       action-vl: 6
       expire-delay: 10
       required-flags: 10
+    b:
+      enabled: true
+      action: NONE
+      notify-vl: 2
+      action-vl: 4
+      expire-delay: 10
+      interval: 10
   spider:
     enabled: true
     action: KICK

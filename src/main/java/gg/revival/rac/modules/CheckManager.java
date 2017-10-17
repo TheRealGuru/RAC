@@ -110,6 +110,11 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(auraA, rac);
         checks.add(auraA);
 
+        KillAuraB auraB = new KillAuraB(rac, "Aura [B]", Cheat.AURA_B, rac.getCfg().getAuraBActionType(), rac.getCfg().getAuraBNotifyVl(), rac.getCfg().getAuraBActionVl(),
+                rac.getCfg().getAuraBExpireDelay(), rac.getCfg().isAuraBEnabled());
+        Bukkit.getPluginManager().registerEvents(auraB, rac);
+        checks.add(auraB);
+
         BadPackets badPackets = new BadPackets(rac, "BadPackets", Cheat.BADPACKETS, rac.getCfg().getBadPacketsActionType(), rac.getCfg().getBadPacketsNotifyVl(), rac.getCfg().getBadPacketsActionVl(),
                 rac.getCfg().getBadPacketsExpireDelay(), rac.getCfg().isBadPacketsEnabled());
         Bukkit.getPluginManager().registerEvents(badPackets, rac);
