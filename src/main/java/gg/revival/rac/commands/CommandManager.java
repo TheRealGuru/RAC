@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import gg.revival.rac.RAC;
 import gg.revival.rac.commands.cont.RACHelpCommand;
 import gg.revival.rac.commands.cont.RACLearnCommand;
+import gg.revival.rac.commands.cont.RACReloadCommand;
 import gg.revival.rac.commands.cont.RACSearchCommand;
 import gg.revival.rac.utils.Permissions;
 import lombok.Getter;
@@ -22,14 +23,21 @@ public class CommandManager {
 
         // rac, label, aliases, syntax, description, permission, minArgs, maxArgs, playerOnly
 
-        RACHelpCommand helpCommand = new RACHelpCommand(rac, "help", Lists.newArrayList(), "/rac help", "View RAC commands", Permissions.RAC_COMMANDS, 1, 1, false);
+        RACHelpCommand helpCommand = new RACHelpCommand(rac, "help", Lists.newArrayList(), "/rac help",
+                "View RAC commands", Permissions.RAC_COMMANDS, 1, 1, false);
         commands.add(helpCommand);
 
-        RACSearchCommand searchCommand = new RACSearchCommand(rac, "search", Arrays.asList("lookup", "find"), "/rac search <cheat/player>", "Lookup a specified player or cheat type", Permissions.RAC_COMMANDS, 2, 2, true);
+        RACSearchCommand searchCommand = new RACSearchCommand(rac, "search", Arrays.asList("lookup", "find"), "/rac search <cheat/player>",
+                "Lookup a specified player or cheat type", Permissions.RAC_COMMANDS, 2, 2, true);
         commands.add(searchCommand);
 
-        RACLearnCommand learnCommand = new RACLearnCommand(rac, "learn", null, "/rac learn", "Machine learning", Permissions.LEARNING_ACCESS, 2, 5, true);
+        RACLearnCommand learnCommand = new RACLearnCommand(rac, "learn", null, "/rac learn",
+                "Machine learning", Permissions.LEARNING_ACCESS, 2, 5, true);
         commands.add(learnCommand);
+
+        RACReloadCommand reloadCommand = new RACReloadCommand(rac, "reload", null, "/rac reload",
+                "Reload RAC", Permissions.RAC_COMMANDS, 1, 1, false);
+        commands.add(reloadCommand);
 
         rac.getLog().log("Loaded " + commands.size() + " commands");
     }
