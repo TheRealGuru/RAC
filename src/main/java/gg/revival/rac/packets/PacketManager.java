@@ -112,6 +112,13 @@ public class PacketManager {
                         new PacketPlayerEvent(player, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), PacketPlayerType.POSITION));
             }
         });
+
+        rac.getProtocolManager().addPacketListener(new PacketAdapter(rac, ListenerPriority.HIGHEST, PacketType.Play.Client.CUSTOM_PAYLOAD) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                rac.getPatchManager().getCustomPayloadPatch().observe(event);
+            }
+        });
     }
 
 }
