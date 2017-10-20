@@ -53,6 +53,7 @@ public class Config {
     @Getter public int auraAActionVl;
     @Getter public int auraAExpireDelay;
     @Getter public int auraARequiredFlags;
+    @Getter public double auraABaseOffsetLimit;
 
     @Getter public boolean speedAEnabled;
     @Getter public ActionType speedAActionType;
@@ -92,6 +93,13 @@ public class Config {
     @Getter public int jesusNotifyVl;
     @Getter public int jesusActionVl;
     @Getter public int jesusExpireDelay;
+
+    @Getter public boolean velocityEnabled;
+    @Getter public ActionType velocityActionType;
+    @Getter public int velocityNotifyVl;
+    @Getter public int velocityActionVl;
+    @Getter public int velocityExpireDelay;
+    @Getter public int velocityFlags;
 
     public Config(RAC rac) {
         this.rac = rac;
@@ -166,6 +174,7 @@ public class Config {
         auraAActionVl = rac.getConfig().getInt("checks.killaura.a.action-vl");
         auraAExpireDelay = rac.getConfig().getInt("checks.killaura.a.expire-delay");
         auraARequiredFlags = rac.getConfig().getInt("checks.killaura.a.required-flags");
+        auraABaseOffsetLimit = rac.getConfig().getDouble("checks.killaura.a.base-offset-limit");
 
         spiderEnabled = rac.getConfig().getBoolean("checks.spider.enabled");
         spiderActionType = ActionType.valueOf(rac.getConfig().getString("checks.spider.action"));
@@ -192,6 +201,13 @@ public class Config {
         jesusNotifyVl = rac.getConfig().getInt("checks.jesus.notify-vl");
         jesusActionVl = rac.getConfig().getInt("checks.jesus.action-vl");
         jesusExpireDelay = rac.getConfig().getInt("checks.jesus.expire-delay");
+
+        velocityEnabled = rac.getConfig().getBoolean("checks.velocity.enabled");
+        velocityActionType = ActionType.valueOf(rac.getConfig().getString("checks.velocity.action"));
+        velocityNotifyVl = rac.getConfig().getInt("checks.velocity.notify-vl");
+        velocityActionVl = rac.getConfig().getInt("checks.velocity.action-vl");
+        velocityExpireDelay = rac.getConfig().getInt("checks.velocity.expire-delay");
+        velocityFlags = rac.getConfig().getInt("checks.velocity.flags");
 
         rac.getLog().log("Loaded files");
     }

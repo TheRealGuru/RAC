@@ -41,6 +41,9 @@ public class Step extends Check implements Listener {
         // Player is flying
         if(player.isFlying()) return;
 
+        // Player is in a vehicle
+        if(player.getVehicle() != null) return;
+
         // Player is not in survival
         if(!player.getGameMode().equals(GameMode.SURVIVAL)) return;
 

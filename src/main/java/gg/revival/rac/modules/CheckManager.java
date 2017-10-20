@@ -125,6 +125,11 @@ public class CheckManager {
                 rac.getCfg().getBlockGlitchActionVl(), rac.getCfg().getBlockGlitchExpireDelay(), rac.getCfg().isBlockGlitchEnabled());
         Bukkit.getPluginManager().registerEvents(blockGlitch, rac);
         checks.add(blockGlitch);
+
+        Velocity velocity = new Velocity(rac, "Velocity", Cheat.VELOCITY, rac.getCfg().getVelocityActionType(), rac.getCfg().getVelocityNotifyVl(), rac.getCfg().getVelocityActionVl(),
+                rac.getCfg().getVelocityExpireDelay(), rac.getCfg().isVelocityEnabled());
+        Bukkit.getPluginManager().registerEvents(velocity, rac);
+        checks.add(velocity);
     }
 
     /**

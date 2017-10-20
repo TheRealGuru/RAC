@@ -61,25 +61,25 @@ public class KillAuraA extends Check implements Listener {
         }
 
         double offset = Math.abs(MathUtils.getAimbotOffset(attacker.getLocation(), attacker.getEyeHeight(), attacked));
-        double offsetLimit = 600.0;
+        double offsetLimit = getRac().getCfg().getAuraABaseOffsetLimit();
 
         if(attacker.getVelocity().length() > 0.08)
-            offsetLimit += 200.0;
+            offsetLimit += 100.0;
 
         int ping = PlayerUtils.getPing(attacker);
 
         if(ping >= 100 && ping < 200)
-            offsetLimit += 200.0;
+            offsetLimit += 100.0;
         else if(ping >= 200 && ping < 250)
-            offsetLimit += 225.0;
+            offsetLimit += 150.0;
         else if(ping >= 250 && ping < 300)
-            offsetLimit += 250.0;
+            offsetLimit += 200.0;
         else if(ping >= 300 && ping < 350)
-            offsetLimit += 275.0;
+            offsetLimit += 250.0;
         else if(ping >= 350 && ping < 400)
             offsetLimit += 300.0;
         else if(ping >= 400 && ping < 450)
-            offsetLimit += 325.0;
+            offsetLimit += 350.0;
         else if(ping > 450)
             return;
 

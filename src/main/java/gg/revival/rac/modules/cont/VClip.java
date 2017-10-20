@@ -23,7 +23,7 @@ import java.util.Map;
 public class VClip extends Check implements Listener {
 
     private final ImmutableList<Material> exemptBlocks = ImmutableList.of(Material.WALL_SIGN, Material.SIGN, Material.SIGN_POST, Material.WOOD_PLATE, Material.STONE_PLATE, Material.IRON_PLATE, Material.GOLD_PLATE,
-            Material.CAKE_BLOCK, Material.FENCE, Material.STEP, Material.AIR, Material.SLIME_BLOCK);
+            Material.CAKE_BLOCK, Material.FENCE, Material.STEP, Material.AIR, Material.SLIME_BLOCK, Material.DAYLIGHT_DETECTOR, Material.DAYLIGHT_DETECTOR_INVERTED);
 
     private final ImmutableList<String> exemptBlockVariants = ImmutableList.of("_FENCE", "FENCE_", "_STAIRS", "_STEP", "PISTON_");
 

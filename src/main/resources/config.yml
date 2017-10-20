@@ -59,6 +59,7 @@ checks:
       action-vl: 6
       expire-delay: 10
       required-flags: 10
+      base-offset-limit: 1350.0
     b:
       enabled: true
       action: NONE
@@ -92,3 +93,10 @@ checks:
     notify-vl: 3
     action-vl: 6
     expire-delay: 30
+  velocity:
+    enabled: true
+    action: NONE
+    notify-vl: 2
+    action-vl: 4
+    expire-delay: 20
+    flags: 1
