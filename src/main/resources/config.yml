@@ -100,3 +100,9 @@ checks:
     action-vl: 4
     expire-delay: 20
     flags: 1
+  regen:
+    enabled: true
+    action: NONE
+    notify-vl: 2
+    action-vl: 4
+    expire-delay: 30

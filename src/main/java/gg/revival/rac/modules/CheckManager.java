@@ -24,8 +24,6 @@ public class CheckManager {
     @Getter private RAC rac;
     @Getter public Set<Check> checks;
 
-    // TODO: No Knockback
-
     public CheckManager(RAC rac) {
         this.rac = rac;
         this.checks = Sets.newConcurrentHashSet();
@@ -45,7 +43,7 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(vclip, rac);
         checks.add(vclip);
 
-        Reach reach = new Reach(rac, "Reach", Cheat.REACH, ActionType.BAN, 2, 5, 10, true);
+        Reach reach = new Reach(rac, "Reach", Cheat.REACH, ActionType.KICK, 2, 5, 10, true);
         Bukkit.getPluginManager().registerEvents(reach, rac);
         checks.add(reach);
 
@@ -77,15 +75,15 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(spider, rac);
         checks.add(spider);
 
-        NoFall noFall = new NoFall(rac, "NoFall", Cheat.NOFALL, ActionType.BAN, 2, 4, 30, true);
+        NoFall noFall = new NoFall(rac, "NoFall", Cheat.NOFALL, ActionType.KICK, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(noFall, rac);
         checks.add(spider);
 
-        BedLeave bedLeave = new BedLeave(rac, "BedLeave", Cheat.BEDLEAVE, ActionType.BAN, 2, 4, 30, true);
+        BedLeave bedLeave = new BedLeave(rac, "BedLeave", Cheat.BEDLEAVE, ActionType.KICK, 2, 4, 30, true);
         Bukkit.getPluginManager().registerEvents(bedLeave, rac);
         checks.add(bedLeave);
 
-        FastBlocks fastBlocks = new FastBlocks(rac, "FastBlocks", Cheat.FASTBLOCK, ActionType.BAN, 3, 6, 15, true);
+        FastBlocks fastBlocks = new FastBlocks(rac, "FastBlocks", Cheat.FASTBLOCK, ActionType.KICK, 3, 6, 15, true);
         Bukkit.getPluginManager().registerEvents(fastBlocks, rac);
         checks.add(fastBlocks);
 
@@ -93,15 +91,16 @@ public class CheckManager {
         Bukkit.getPluginManager().registerEvents(fastBow, rac);
         checks.add(fastBow);
 
-        NoSwing noSwing = new NoSwing(rac, "NoSwing", Cheat.NOSWING, ActionType.BAN, 5, 10, 15, true);
+        NoSwing noSwing = new NoSwing(rac, "NoSwing", Cheat.NOSWING, ActionType.KICK, 5, 10, 15, true);
         Bukkit.getPluginManager().registerEvents(noSwing, rac);
         checks.add(noSwing);
 
-        Regen regen = new Regen(rac, "Regen", Cheat.REGEN, ActionType.BAN, 1, 2, 30, true);
+        Regen regen = new Regen(rac, "Regen", Cheat.REGEN, rac.getCfg().getRegenActionType(), rac.getCfg().getRegenNotifyVl(), rac.getCfg().getRegenActionVl(),
+                rac.getCfg().getRegenExpireDelay(), rac.getCfg().isRegenEnabled());
         Bukkit.getPluginManager().registerEvents(regen, rac);
         checks.add(regen);
 
-        SpeedA speedA = new SpeedA(rac, "Speed [A]", Cheat.SPEED_A, ActionType.BAN, rac.getCfg().getSpeedANotifyVl(), rac.getCfg().getSpeedAActionVl(),
+        SpeedA speedA = new SpeedA(rac, "Speed [A]", Cheat.SPEED_A, ActionType.KICK, rac.getCfg().getSpeedANotifyVl(), rac.getCfg().getSpeedAActionVl(),
                 rac.getCfg().getSpeedAExpireDelay(), rac.getCfg().isSpeedAEnabled());
         Bukkit.getPluginManager().registerEvents(speedA, rac);
         checks.add(speedA);

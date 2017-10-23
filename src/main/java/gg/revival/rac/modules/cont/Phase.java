@@ -173,6 +173,8 @@ public class Phase extends Check implements Listener {
         Location storedLocation = null;
         boolean teleported = false;
 
+        if(player.hasPermission(Permissions.CHECK_BYPASS)) return;
+
         if(player.isFlying()) return;
 
         if(!player.getGameMode().equals(GameMode.SURVIVAL)) return;

@@ -101,6 +101,12 @@ public class Config {
     @Getter public int velocityExpireDelay;
     @Getter public int velocityFlags;
 
+    @Getter public boolean regenEnabled;
+    @Getter public ActionType regenActionType;
+    @Getter public int regenNotifyVl;
+    @Getter public int regenActionVl;
+    @Getter public int regenExpireDelay;
+
     public Config(RAC rac) {
         this.rac = rac;
     }
@@ -208,6 +214,12 @@ public class Config {
         velocityActionVl = rac.getConfig().getInt("checks.velocity.action-vl");
         velocityExpireDelay = rac.getConfig().getInt("checks.velocity.expire-delay");
         velocityFlags = rac.getConfig().getInt("checks.velocity.flags");
+
+        regenEnabled = rac.getConfig().getBoolean("checks.regen.enabled");
+        regenActionType = ActionType.valueOf(rac.getConfig().getString("checks.regen.action"));
+        regenNotifyVl = rac.getConfig().getInt("checks.regen.notify-vl");
+        regenActionVl = rac.getConfig().getInt("checks.regen.action-vl");
+        regenExpireDelay = rac.getConfig().getInt("checks.regen.expire-delay");
 
         rac.getLog().log("Loaded files");
     }

@@ -22,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -96,6 +97,9 @@ public class Velocity extends Check implements Listener {
         if(event.isCancelled()) return;
 
         if(!(event.getEntity() instanceof Player)) return;
+
+        // Make sure the player is not attacking himself or pearling
+        if(event.getEntity().getUniqueId().equals(event.getDamager().getUniqueId()) || !event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;
 
         Player player = (Player)event.getEntity();
 

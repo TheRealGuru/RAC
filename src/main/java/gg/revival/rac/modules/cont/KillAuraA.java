@@ -52,6 +52,9 @@ public class KillAuraA extends Check implements Listener {
         // Player has bypass
         if(attacker.hasPermission(Permissions.CHECK_BYPASS)) return;
 
+        // Check the the attacker is even in click-able range (prevents spam)
+        if(attacker.getLocation().distanceSquared(attacked.getLocation()) >= 25) return;
+
         int flags = 0;
         long time = System.currentTimeMillis();
 

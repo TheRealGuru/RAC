@@ -50,17 +50,17 @@ public class Reach extends Check implements Listener {
         int ping = PlayerUtils.getPing(playerDamager);
 
         if(ping >= 100 && ping < 200)
-            maxReach += 0.2;
+            maxReach += 0.3;
         else if(ping >= 200 && ping < 250)
-            maxReach += 0.4;
+            maxReach += 0.5;
         else if(ping >= 250 && ping < 300)
-            maxReach += 0.6;
+            maxReach += 0.7;
         else if(ping >= 300 && ping < 350)
-            maxReach += 0.8;
+            maxReach += 0.9;
         else if(ping > 350 && ping < 400)
-            maxReach += 1.0;
+            maxReach += 1.1;
         else if(ping >= 400 && ping < 450)
-            maxReach += 1.2;
+            maxReach += 1.3;
         else if(ping >= 450)
             return;
 
