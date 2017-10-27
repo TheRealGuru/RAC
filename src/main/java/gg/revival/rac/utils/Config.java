@@ -39,6 +39,7 @@ public class Config {
     @Getter public int vclipNotifyVl;
     @Getter public int vclipActionVl;
     @Getter public int vclipExpireDelay;
+    @Getter public int vclipMaxBlocks;
 
     @Getter public boolean stepEnabled;
     @Getter public ActionType stepActionType;
@@ -160,6 +161,7 @@ public class Config {
         vclipNotifyVl = rac.getConfig().getInt("checks.vclip.notify-vl");
         vclipActionVl = rac.getConfig().getInt("checks.vclip.action-vl");
         vclipExpireDelay = rac.getConfig().getInt("checks.vclip.expire-delay");
+        vclipMaxBlocks = rac.getConfig().getInt("checks.vclip.max-blocks");
 
         stepEnabled = rac.getConfig().getBoolean("checks.step.enabled");
         stepActionType = ActionType.valueOf(rac.getConfig().getString("checks.step.action"));

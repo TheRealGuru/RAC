@@ -94,7 +94,7 @@ public class VClip extends Check implements Listener {
             clippedBlocks++;
         }
 
-        if(clippedBlocks > 0) {
+        if(clippedBlocks > getRac().getCfg().getVclipMaxBlocks()) {
             addViolation(player.getUniqueId(), new Violation(player.getName() + " tried moving vertically through " + clippedBlocks + " blocks"), true);
 
             verbose(player.getName() + " tried moving vertically though " + clippedBlocks + " blocks");

@@ -19,6 +19,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
 import java.util.UUID;
@@ -78,6 +80,19 @@ public class Flight extends Check implements Listener {
         }
 
         ACPlayer acPlayer = getRac().getPlayerManager().getPlayerByUUID(player.getUniqueId());
+        long maxMS = getRac().getCfg().getFlightMaxMS();
+
+        // For each level of jump boost add an extra 100 ms
+        if(player.hasPotionEffect(PotionEffectType.JUMP)) {
+            for(PotionEffect effect : player.getActivePotionEffects()) {
+                if(!effect.getType().equals(PotionEffectType.JUMP)) continue;
+
+                for(int i = 0; i < effect.getAmplifier(); i++)
+                    maxMS += 100L;
+
+                break;
+            }
+        }
 
         // Player has recently bounced on a slime block
         if((System.currentTimeMillis() - acPlayer.getRecentBounce()) <= 2000L) return;
@@ -96,7 +111,7 @@ public class Flight extends Check implements Listener {
 
         final long timeDifference = System.currentTimeMillis() - time;
 
-        if(timeDifference > getRac().getCfg().getFlightMaxMS()) {
+        if(timeDifference >= maxMS) {
             flyingTicks.remove(player.getUniqueId());
 
             addViolation(player.getUniqueId(), new Violation(player.getName() + " has been hovering above the ground for " + timeDifference + "ms"), false);

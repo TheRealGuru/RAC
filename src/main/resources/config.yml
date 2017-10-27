@@ -37,6 +37,7 @@ checks:
     notify-vl: 2
     action-vl: 4
     expire-delay: 30
+    max-blocks: 2
   step:
     enabled: true
     action: KICK

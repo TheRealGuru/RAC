@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
@@ -45,6 +47,16 @@ public class Reach extends Check implements Listener {
 
         if(playerDamager.getVelocity().length() > 0.08)
             maxReach += playerDamager.getVelocity().length();
+
+        // If a player has speed > 2, (classes usually) the player can flag reach by 1.7 chasing a player
+        if(playerDamager.hasPotionEffect(PotionEffectType.SPEED)) {
+            for(PotionEffect effects : playerDamager.getActivePotionEffects()) {
+                if(!effects.getType().equals(PotionEffectType.SPEED) || effects.getAmplifier() <= 2) continue;
+
+                for(int i = 2; i < effects.getAmplifier(); i++)
+                    maxReach += 1.0;
+            }
+        }
 
         double distance = playerDamager.getEyeLocation().distance(damaged.getLocation());
         int ping = PlayerUtils.getPing(playerDamager);
